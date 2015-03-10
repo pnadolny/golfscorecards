@@ -1,5 +1,5 @@
-A sample app to score volleyball. 
+A sample app to score Nassau Golf (2,2,2) 
 
-Also running on Google App Engine:
 
-http://volleyballscorecard.appspot.com/
+
+
