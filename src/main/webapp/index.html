@@ -44,12 +44,8 @@
       </a>
 
       <table border="1" class="table">
-
-        <thead>
-          <tr>
-            <td colspan=11>Front 9 </td>
-          </tr>
-        </thead>
+		<caption>Front 9</caption>
+		
         <tr>
           <td>
             Hole
@@ -69,11 +65,10 @@
 
           <td></td>
         </tr>
-        <thead>
-          <tr>
-            <td colspan=11>Gross</td>
-          </tr>
-        </thead>
+      
+    	  <tr>
+            <td colspan="11">Gross</td>
+        </tr>
         <tr ng-repeat="p in data.players ">
           <td>
             P{{$index+1}} <span class="badge">{{p.handicap}}</span>
@@ -84,12 +79,11 @@
           <td>{{sumGross($index,0,9)}}</td>
         </tr>
 
-        <thead>
           <tr>
-            <td colspan=11>Net</td>
+            <td colspan="11">Net</td>
+	    
           </tr>
-        </thead>
-
+        
 
         <tr ng-repeat="p in scoredRound.players">
           <td>
@@ -101,20 +95,20 @@
           <td>{{sumNet($index,0,9)}}</td>
 
         </tr>
-        <thead>
+		
           <tr>
-            <td colspan=11>Wins</td>
+            <td colspan="11">Wins</td>
+	    
           </tr>
-        </thead>
-
-        <tr ng-repeat="w in wins track by $index">
+       
+          <tr ng-repeat="w in wins track by $index">
           <td>
             P{{$index+1}}
           </td>
 
           <td ng-repeat="x in w | limitTo:9 track by $index">
-            <div ng-show="x!=-1"><span class="glyphicon glyphicon-ok"></span>
-            </div>
+            <span ng-show="x!=-1" class="glyphicon glyphicon-ok"></span>
+            
           </td>
           <td>{{sumWins($index,0,9)}}</td>
 
@@ -125,12 +119,8 @@
 
       <table border="1" class="table">
 
-        <thead>
-          <tr>
-            <td colspan=11>Back 9 </td>
-          </tr>
-        </thead>
-        <tr>
+	  <caption>Back 9</caption>
+		<tr>
           <td>
             Hole
           </td>
@@ -149,11 +139,10 @@
 
           <td></td>
         </tr>
-        <thead>
           <tr>
-            <td colspan=11>Gross</td>
-          </tr>
-        </thead>
+			<td colspan="11">Gross</td>
+	    
+		</tr>
         <tr ng-repeat="p in data.players ">
           <td>
             P{{$index+1}} <span class="badge">{{p.handicap}}</span>
@@ -164,13 +153,12 @@
           <td>{{sumGross($index,9,18)}}</td>
         </tr>
 
-        <thead>
           <tr>
-            <td colspan=11>Net</td>
-          </tr>
-        </thead>
+ <td colspan="11">Net</td>
+	        
 
-
+		</tr>
+       
         <tr ng-repeat="p in scoredRound.players">
           <td>
             P{{$index+1}} <span class="badge">{{p.handicap}}</span>
@@ -181,21 +169,20 @@
           <td>{{sumNet($index,9,18)}}</td>
 
         </tr>
-        <thead>
-          <tr>
-            <td colspan=11>Wins</td>
-          </tr>
-        </thead>
-
+    
+		<tr>
+			<td colspan="11">Wins</td>
+	      </tr>
+       
         <tr ng-repeat="w in wins track by $index">
           <td>
             P{{$index+1}}
           </td>
 
           <td ng-repeat="x in w | offset:9 | limitTo:9 track by $index">
-            <div ng-show="x!=-1"><span class="glyphicon glyphicon-ok"></span>
-            </div>
+           <span ng-show="x!=-1" class="glyphicon glyphicon-ok"></span>
           </td>
+
           <td>{{sumWins($index,9,18)}}</td>
 
         </tr>
