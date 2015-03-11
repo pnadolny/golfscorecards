@@ -2,7 +2,7 @@
 <html lang="en" xmlns:ng="https://angularjs.org" ng-app="golfApp">
 
 <head>
-  <title>Nassau Golf</title>
+  <title>Match Play Golf</title>
 
   <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
   <META HTTP-EQUIV="Expires" CONTENT="-1">
@@ -12,6 +12,19 @@
   <link rel="stylesheet" href="style.css" />
 
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+   <style>
+   
+           [ng\:cloak],
+        [ng-cloak],
+        [data-ng-cloak],
+        [x-ng-cloak],
+        .ng-cloak,
+        .x-ng-cloak {
+            display: none !important;
+        }
+
+   
+</style>
 
 </head>
 
@@ -27,14 +40,14 @@
 
       <a class="btn btn-success btn-score" ng-click="loadSampleData();">
         <span class="glyphicon glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-        Load Sample Scores
+        Load Sample Round
       </a>
 
       <table border="1" class="table">
 
         <thead>
           <tr>
-            <td colspan=11>Front 9 (Match Play)</td>
+            <td colspan=11>Front 9 </td>
           </tr>
         </thead>
         <tr>
@@ -114,7 +127,7 @@
 
         <thead>
           <tr>
-            <td colspan=11>Back 9 (Match Play)</td>
+            <td colspan=11>Back 9 </td>
           </tr>
         </thead>
         <tr>
@@ -221,7 +234,7 @@
 
       <div ng-cloak class="col-sm-6 col-md-4">
         <div class="thumbnail shadow">
-          <p>Handicap<span class="legend legend-type-player" style="float:right">{{currentPlayer+1}}</span>
+          <p>Handicap<span class="legend legend-type-player" style="float:right">Player&nbsp {{currentPlayer}}</span>
           </p>
 
           <div class="scoreThumb">
@@ -261,22 +274,7 @@
 
     </div>
 
-    <div ng-cloak class="col-sm-6 col-md-4">
-      <div class="thumbnail shadow">
-        <p>Bet</p>
-        <div class="scoreThumb">
-          <a class="link-digit" ng-click="data.frontBet = data.frontBet + 1;">{{data.frontBet}}</a>
-        </div>
-        <a class="btn btn-danger btn-score" ng-show="data.frontBet !=0;" ng-click="data.frontBet = data.frontBet -1;">
-          <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
-          Subtract
-        </a>
-
-      </div>
-    </div>
-
-
-    <div ng-cloak class="col-sm-6 col-md-4">
+      <div ng-cloak class="col-sm-6 col-md-4">
       <div class="thumbnail shadow">
 
         <p>Hole</p>

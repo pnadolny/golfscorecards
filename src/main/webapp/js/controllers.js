@@ -19,7 +19,7 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
 
     for (var x = 0; x < HOLES; x++) {
       $scope.data.course.push({
-        handicap: x + 1
+        handicap: 0
       });
 
     }
@@ -146,6 +146,10 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
     }
 
     $scope.bumpHole = function() {
+	  if ($scope.currentHole===HOLES-1) {
+	  $scope.currentHole = 0;
+	  return;
+	  }
       if (angular.isUndefined($scope.data.course[$scope.currentHole])) {
         var hole = {
           handicap: 0
