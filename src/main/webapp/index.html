@@ -192,6 +192,7 @@
 
     </div>
 
+	<br>
 
     <div ng-cloak class="col-sm-6 col-md-4">
       <div class="thumbnail shadow">
@@ -240,8 +241,8 @@
 
         <div ng-cloak class="col-sm-6 col-md-4">
           <div class="thumbnail shadow">
-            <p>Strokes<span class="legend legend-type-player" style="float:left">{{currentPlayer}}</span>
-              <span class="legend legend-type-hole" style="float:right">{{$index+1}}</span>
+            <p>&nbsp<span class="legend legend-type-player" style="float:left">Player&nbsp {{currentPlayer}}</span>
+              <span class="legend legend-type-hole" style="float:right">Hole {{$index+1}}</span>
             </p>
 
             <div class="scoreThumb">
@@ -301,7 +302,7 @@
 
       <div ng-cloak class="col-sm-6 col-md-4">
         <div class="thumbnail shadow">
-          <p>Handicap<span class="legend legend-type-hole" style="float:right">{{currentHole+1}}</span>
+          <p>Handicap<span class="legend legend-type-hole" style="float:right">Hole&nbsp{{currentHole+1}}</span>
           </p>
           <div class="scoreThumb">
             <a class="link-digit" ng-click="h.handicap = h.handicap + 1;">{{h.handicap}}</a>
@@ -319,6 +320,36 @@
 
     </div>
 
+		<div ng-cloak class="col-sm-6 col-md-4">
+                <div class="thumbnail shadow">
+
+                    <p>About 
+					
+					<span class="glyphicon glyphicon-info-sign" style="float:right"></span>
+                    </p>
+
+				        <div class="scoreThumb">
+
+                            <p class="callout-detail" style="font-weight:normal; padding: 5px;">An application to score match play golf. This application is running on Google's app engine. 
+							The technology stack includes Angular JS and Bootstrap. 
+                                <p>
+
+                        </div>
+
+                        <a class="btn btn-success btn-score" href="https://github.com/pnadolny/golfscorecards">View on GitHub</a>
+						<a class="btn btn-warning btn-score" href="https://github.com/pnadolny/golfscorecards">Report an issue</a>
+						
+						
+						
+						
+                </div>
+
+
+            </div>
+
+	
+	
+	
   </div>
 
 

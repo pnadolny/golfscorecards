@@ -23,7 +23,8 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
       });
 
     }
-
+	
+    
     $scope.loadSampleData = function() {
       $scope.data = $scope.sampleData;
       $scope.currentHole = 1;
