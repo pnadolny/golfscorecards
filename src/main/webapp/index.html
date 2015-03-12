@@ -225,9 +225,10 @@
 		  <table width="100%">
 		  <tbody>
 		  <tr>
-          <td><a class="link-digit" ng-click="data.frontBet = data.frontBet + 1">{{data.frontBet}}</a>
-          <td><a class="link-digit" ng-click="data.backBet = data.backBet + 1">{{data.backBet}}</a>
           <td><a class="link-digit" ng-click="data.bet = data.bet + 1">{{data.bet}}</a>
+		  <td><a class="link-digit" ng-click="data.frontBet = data.frontBet + 1">{{data.frontBet}}</a>
+          <td><a class="link-digit" ng-click="data.backBet = data.backBet + 1">{{data.backBet}}</a>
+          
 		  </table>
         </div>
 
@@ -248,7 +249,11 @@
 	
     <div ng-cloak class="col-sm-6 col-md-4">
       <div class="thumbnail shadow">
-        <p>Player</p>
+        <p>Player 
+			<a style="float: right">{{getWinnings(currentPlayer) | currency}}</a>
+		</p>
+		
+                        
         <div class="scoreThumb">
 		  <table width="100%">
 		  <tbody>

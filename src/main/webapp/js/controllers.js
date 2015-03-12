@@ -7,16 +7,16 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
   function($scope, $log, Storage) {
 
     var DEFAULT_BET = 2;
-	var DEFAULT_FRONT_BET = 2;
-	var DEFAULT_BACK_BET = 2;
-	var DEFAULT_PAR = 3;
-	
+    var DEFAULT_FRONT_BET = 2;
+    var DEFAULT_BACK_BET = 2;
+    var DEFAULT_PAR = 3;
+
     var DEFAULT_PLAYER_HANDICAP = 0;
     var HOLES = 18;
     $scope.data = {
-		frontBet: DEFAULT_FRONT_BET,
-		backBet: DEFAULT_BACK_BET,
-		bet: DEFAULT_BET,
+      frontBet: DEFAULT_FRONT_BET,
+      backBet: DEFAULT_BACK_BET,
+      bet: DEFAULT_BET,
 
       course: [],
       players: []
@@ -26,16 +26,76 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
 
     for (var x = 0; x < HOLES; x++) {
       $scope.data.course.push({
-		par: DEFAULT_PAR,
-        handicap: 0
+        par: DEFAULT_PAR,
+        handicap: x + 1
       });
 
     }
-	
+    $scope.getWinnings = function(playerIndex) {
+      if (angular.isUndefined(playerIndex)) {
+        return 0;
+
+      }
+      if (angular.isUndefined($scope.wins)) {
+        return 0;
+      }
+      if ($scope.wins.length == 0) {
+        return 0;
+
+      }
+      $log.log(JSON.stringify(playerIndex));
+
+      var frontWins = $scope.sumWins(playerIndex - 1, 0, 9);
+      var backWins = $scope.sumWins(playerIndex - 1, 9, 18);
+
+      //$log.log(JSON.stringify($scope.data))
+      $log.log("Front wins " + JSON.stringify(frontWins))
+      $log.log("Back wins " + JSON.stringify(backWins))
+
+      var total = (frontWins * $scope.data.bet) + (backWins * $scope.data.bet);
+
+      // Who won the front?
+      var winningPlayerFront = 0;
+      var min = 1000;
+
+      var set = new Set();
+      for (var p = 0; p < $scope.data.players.length; p++) {
+        set.add($scope.sumNet(p, 0, 9))
+        if ($scope.sumNet(p, 0, 9) < min) {
+          winningPlayerFront = p;
+        }
+      }
+      $log.log("set..front. " + JSON.stringify(set));
+
+
+      if (set.size != 1 && winningPlayerFront === playerIndex - 1) {
+        total = total + $scope.data.frontBet;
+      }
+
+      set = new Set();
+      // Who won the back?
+      var winningPlayerBack = 0;
+      var min = 1000;
+      for (var p = 0; p < $scope.data.players.length; p++) {
+        set.add($scope.sumNet(p, 9, HOLES))
+        if ($scope.sumNet(p, 9, HOLES) < min) {
+          winningPlayerBack = p;
+        }
+      }
+
+      if (set.size != 1 && winningPlayerBack === playerIndex - 1) {
+        total = total + $scope.data.backBet;
+      }
+
+
+      return total;
+
+    }
+
     $scope.resetHandicap = function(playerIndex) {
-		$scope.data.players[playerIndex-1].handicap = 0;
-		
-	}
+      $scope.data.players[playerIndex - 1].handicap = 0;
+
+    }
     $scope.loadSampleData = function() {
       $scope.data = $scope.sampleData;
       $scope.currentHole = 1;
@@ -75,19 +135,19 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
       course.sort(function(a, b) {
         return a.handicap - b.handicap;
       });
-      
+
 
       var lowestHandicap = 1000;
-      
+
       for (var playerIndex = 0; playerIndex < scoredRound.players.length; playerIndex++) {
         var playerHandicap = scoredRound.players[playerIndex].handicap;
         lowestHandicap = Math.min(lowestHandicap, playerHandicap);
       }
       for (var playerIndex = 0; playerIndex < scoredRound.players.length; playerIndex++) {
-        scoredRound.players[playerIndex].handicap =  scoredRound.players[playerIndex].handicap - lowestHandicap;
+        scoredRound.players[playerIndex].handicap = scoredRound.players[playerIndex].handicap - lowestHandicap;
       }
-      
-      
+
+
       for (var playerIndex = 0; playerIndex < scoredRound.players.length; playerIndex++) {
         var playerHandicap = scoredRound.players[playerIndex].handicap;
         var set = [];
@@ -157,10 +217,10 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
     }
 
     $scope.bumpHole = function() {
-	  if ($scope.currentHole===HOLES-1) {
-	  $scope.currentHole = 0;
-	  return;
-	  }
+      if ($scope.currentHole === HOLES - 1) {
+        $scope.currentHole = 0;
+        return;
+      }
       if (angular.isUndefined($scope.data.course[$scope.currentHole])) {
         var hole = {
           handicap: 0
@@ -171,7 +231,6 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
     }
 
     $scope.bumpPlayer = function() {
-      $log.log(JSON.stringify($scope.data))
       if (angular.isUndefined($scope.data.players[$scope.currentPlayer])) {
         var p = {
           handicap: DEFAULT_PLAYER_HANDICAP,
@@ -190,77 +249,77 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
 
     $scope.sampleData = {
       "frontBet": 2,
-	  "backBet":2,
-	  "bet":2,
+      "backBet": 2,
+      "bet": 2,
       "course": [{
-		"par": 4,
+        "par": 4,
         "handicap": 4,
       }, {
-	  		"par": 4,
+        "par": 4,
 
         "handicap": 8,
       }, {
-	  		"par": 4,
+        "par": 4,
 
         "handicap": 14,
       }, {
-	  		"par": 4,
+        "par": 4,
 
         "handicap": 16,
       }, {
-	  		"par": 4,
+        "par": 4,
 
         "handicap": 2,
       }, {
-	  		"par": 4,
+        "par": 4,
 
         "handicap": 6,
       }, {
-	  		"par": 4,
+        "par": 4,
 
         "handicap": 18,
       }, {
-	  		"par": 4,
+        "par": 4,
 
         "handicap": 12,
       }, {
-	  		"par": 4,
+        "par": 4,
 
         "handicap": 10,
       }, {
-	  		"par": 4,
+        "par": 4,
 
         "handicap": 5
       }, {
-	  		"par": 4,
+        "par": 4,
 
         "handicap": 3
       }, {
-	  		"par": 4,
+        "par": 4,
 
         "handicap": 7
       }, {
-	  		"par": 4,
+        "par": 4,
 
         "handicap": 11
       }, {
-	  		"par": 4,
+        "par": 4,
 
         "handicap": 9
       }, {
-	  		"par": 4,
+        "par": 4,
 
         "handicap": 1
       }, {
-	  		"par": 4,
+        "par": 4,
 
         "handicap": 15
       }, {
-	  		"par": 4,
+        "par": 4,
 
         "handicap": 13
       }, {
-	  		"par": 4,
+        "par": 4,
 
         "handicap": 17
       }],
