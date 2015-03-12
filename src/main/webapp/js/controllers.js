@@ -7,10 +7,17 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
   function($scope, $log, Storage) {
 
     var DEFAULT_BET = 2;
+	var DEFAULT_FRONT_BET = 2;
+	var DEFAULT_BACK_BET = 2;
+	var DEFAULT_PAR = 3;
+	
     var DEFAULT_PLAYER_HANDICAP = 0;
     var HOLES = 18;
     $scope.data = {
-      frontBet: DEFAULT_BET,
+		frontBet: DEFAULT_FRONT_BET,
+		backBet: DEFAULT_BACK_BET,
+		bet: DEFAULT_BET,
+
       course: [],
       players: []
     };
@@ -19,12 +26,16 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
 
     for (var x = 0; x < HOLES; x++) {
       $scope.data.course.push({
+		par: DEFAULT_PAR,
         handicap: 0
       });
 
     }
 	
-    
+    $scope.resetHandicap = function(playerIndex) {
+		$scope.data.players[playerIndex-1].handicap = 0;
+		
+	}
     $scope.loadSampleData = function() {
       $scope.data = $scope.sampleData;
       $scope.currentHole = 1;
@@ -168,7 +179,7 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
         };
         for (var x = 0; x < $scope.data.course.length; x++) {
           p.scores.push({
-            "grossScore": 3
+            "grossScore": $scope.data.course[x].par
           });
         }
         $scope.data.players.push(p);
@@ -179,41 +190,78 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
 
     $scope.sampleData = {
       "frontBet": 2,
+	  "backBet":2,
+	  "bet":2,
       "course": [{
+		"par": 4,
         "handicap": 4,
       }, {
+	  		"par": 4,
+
         "handicap": 8,
       }, {
+	  		"par": 4,
+
         "handicap": 14,
       }, {
+	  		"par": 4,
+
         "handicap": 16,
       }, {
+	  		"par": 4,
+
         "handicap": 2,
       }, {
+	  		"par": 4,
+
         "handicap": 6,
       }, {
+	  		"par": 4,
+
         "handicap": 18,
       }, {
+	  		"par": 4,
+
         "handicap": 12,
       }, {
+	  		"par": 4,
+
         "handicap": 10,
       }, {
+	  		"par": 4,
+
         "handicap": 5
       }, {
+	  		"par": 4,
+
         "handicap": 3
       }, {
+	  		"par": 4,
+
         "handicap": 7
       }, {
+	  		"par": 4,
+
         "handicap": 11
       }, {
+	  		"par": 4,
+
         "handicap": 9
       }, {
+	  		"par": 4,
+
         "handicap": 1
       }, {
+	  		"par": 4,
+
         "handicap": 15
       }, {
+	  		"par": 4,
+
         "handicap": 13
       }, {
+	  		"par": 4,
+
         "handicap": 17
       }],
       "players": [{

@@ -1,3 +1,12 @@
+caption {
+  background-color: rgb(225, 232, 238);
+  border-top: 2px solid;
+  border-left: 2px solid;
+  border-right: 2px solid;
+  
+}
+
+
 .shadow {
   -webkit-box-shadow: 9px 10px 5px 0px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 9px 10px 5px 0px rgba(0, 0, 0, 0.75);
@@ -15,7 +24,6 @@ thead {
 .link-digit {
   padding-left: 50px;
   font-size: 750%;
-  font-weight: bold;
   color: #0B0B0B;
 }
 .btn-score {
