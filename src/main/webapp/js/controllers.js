@@ -10,19 +10,19 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
     var DEFAULT_FRONT_BET = 2;
     var DEFAULT_BACK_BET = 2;
     var DEFAULT_PAR = 3;
-
     var DEFAULT_PLAYER_HANDICAP = 0;
     var HOLES = 18;
+
+    $scope.currentHole = 0;
+    $scope.currentPlayer = 0;
+
     $scope.data = {
       frontBet: DEFAULT_FRONT_BET,
       backBet: DEFAULT_BACK_BET,
       bet: DEFAULT_BET,
-
       course: [],
       players: []
     };
-    $scope.currentHole = 0;
-    $scope.currentPlayer = 0;
 
     for (var x = 0; x < HOLES; x++) {
       $scope.data.course.push({
@@ -44,60 +44,70 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
 
       }
       $log.log(JSON.stringify(playerIndex));
-
       var frontWins = $scope.sumWins(playerIndex - 1, 0, 9);
       var backWins = $scope.sumWins(playerIndex - 1, 9, 18);
 
-      //$log.log(JSON.stringify($scope.data))
       $log.log("Front wins " + JSON.stringify(frontWins))
       $log.log("Back wins " + JSON.stringify(backWins))
 
       var total = (frontWins * $scope.data.bet) + (backWins * $scope.data.bet);
 
       // Who won the front?
-      var winningPlayerFront = 0;
-      var min = 1000;
+      var winningPlayerFront = -1;
+      var min = Number.MAX_VALUE;
 
-      var set = new Set();
+      var set = [];
       for (var p = 0; p < $scope.data.players.length; p++) {
-        set.add($scope.sumNet(p, 0, 9))
-        if ($scope.sumNet(p, 0, 9) < min) {
-          winningPlayerFront = p;
-        }
+	     var score = $scope.sumNet(p, 0, 9);
+	     set.push(score);
+         if (score < min) {
+            winningPlayerFront = p;
+         }
+		 min = score;
       }
+	  $log.log("winning player front " + JSON.stringify(winningPlayerFront));
       $log.log("set..front. " + JSON.stringify(set));
-
-
-      if (set.size != 1 && winningPlayerFront === playerIndex - 1) {
-        total = total + $scope.data.frontBet;
+	  toUnique(set);
+      if (set.length != 1 && winningPlayerFront === (playerIndex - 1)) {
+		$log.log("Adding "+$scope.data.frontBet + "to " + winningPlayerFront);
+		total = total + $scope.data.frontBet;
       }
 
-      set = new Set();
+      set = [];
       // Who won the back?
-      var winningPlayerBack = 0;
-      var min = 1000;
+      var winningPlayerBack = -1;
+      var min = Number.MAX_VALUE;
       for (var p = 0; p < $scope.data.players.length; p++) {
-        set.add($scope.sumNet(p, 9, HOLES))
-        if ($scope.sumNet(p, 9, HOLES) < min) {
+	    var score = $scope.sumNet(p, 9, HOLES);
+        set.push(score);
+        if (score < min) {
           winningPlayerBack = p;
         }
+		min = score;
       }
-
-      if (set.size != 1 && winningPlayerBack === playerIndex - 1) {
+		toUnique(set);
+      if (set.length != 1 && winningPlayerBack === playerIndex - 1) {
         total = total + $scope.data.backBet;
       }
-
-
       return total;
 
     }
+	
+	function toUnique(a,b,c){//array,placeholder,placeholder
+		b=a.length;
+			while(c=--b)while(c--)a[b]!==a[c]||a.splice(c,1)
+	 }
 
     $scope.resetHandicap = function(playerIndex) {
       $scope.data.players[playerIndex - 1].handicap = 0;
 
     }
     $scope.loadSampleData = function() {
-      $scope.data = $scope.sampleData;
+	   var sampleData = $scope.sampleData;
+	   
+      $scope.data = {};
+	  $scope.data = sampleData;
+	  
       $scope.currentHole = 1;
       $scope.currentPlayer = 1;
     }
