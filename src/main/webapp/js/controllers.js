@@ -15,7 +15,9 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
 
     $scope.currentHole = 0;
     $scope.currentPlayer = 0;
+    $scope.currentPlayerHole = 0;
 
+	
     $scope.data = {
       frontBet: DEFAULT_FRONT_BET,
       backBet: DEFAULT_BACK_BET,
@@ -102,6 +104,14 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
       $scope.data.players[playerIndex - 1].handicap = 0;
 
     }
+	$scope.resetHoleHandicap = function(holeIndex) {
+	  $scope.data.course[holeIndex].handicap = 0;
+
+    }
+	
+	
+	
+	
     $scope.loadSampleData = function() {
 	   var sampleData = $scope.sampleData;
 	   
