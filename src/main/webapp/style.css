@@ -6,6 +6,10 @@ caption {
   
 }
 
+th {
+   text-align: center;
+}
+
 
 .shadow {
   -webkit-box-shadow: 9px 10px 5px 0px rgba(0, 0, 0, 0.75);

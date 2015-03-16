@@ -3,6 +3,28 @@
 var golfAppControllers = angular.module('golfControllers', []);
 
 
+
+
+
+var ModalPayeeInstanceCtrl = function($scope, $modalInstance, name) {
+
+	$scope.name = name;
+    
+    $scope.ok = function() {
+        $modalInstance.close($scope.payee);
+    };
+    $scope.cancel = function() {
+        $modalInstance.dismiss('cancel');
+    };
+};
+
+
+
+
+
+
+
+
 golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
   function($scope, $log, Storage) {
 
@@ -33,6 +55,9 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
       });
 
     }
+	
+	
+	
     $scope.getWinnings = function(playerIndex) {
       if (angular.isUndefined(playerIndex)) {
         return 0;
@@ -108,18 +133,22 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
 	  $scope.data.course[holeIndex].handicap = 0;
 
     }
+	$scope.resetHolePar = function(holeIndex) {
+	  $scope.data.course[holeIndex].par = 0;
+	}
 	
 	
 	
 	
     $scope.loadSampleData = function() {
-	   var sampleData = $scope.sampleData;
 	   
-      $scope.data = {};
-	  $scope.data = sampleData;
+      $scope.data = $scope.sampleData;
 	  
-      $scope.currentHole = 1;
+	  
+      $scope.currentHole = 0;
       $scope.currentPlayer = 1;
+	  $scope.currentPlayerHole = 0;
+
     }
     $scope.sumGross = function(playerIndex, offset, count) {
       var total = 0;
