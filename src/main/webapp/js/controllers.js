@@ -6,12 +6,11 @@ var golfAppControllers = angular.module('golfControllers', []);
 
 
 
-var ModalPayeeInstanceCtrl = function($scope, $modalInstance, name) {
-
-	$scope.name = name;
+var ModalPlayerInstanceCtrl = function($scope, $modalInstance, player) {
+	$scope.player= player;
     
     $scope.ok = function() {
-        $modalInstance.close($scope.payee);
+        $modalInstance.close($scope.player);
     };
     $scope.cancel = function() {
         $modalInstance.dismiss('cancel');
@@ -25,8 +24,8 @@ var ModalPayeeInstanceCtrl = function($scope, $modalInstance, name) {
 
 
 
-golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
-  function($scope, $log, Storage) {
+golfAppControllers.controller('GolfController', ['$scope', '$modal','$log', 'Storage',
+  function($scope,$modal, $log, Storage) {
 
     var DEFAULT_BET = 2;
     var DEFAULT_FRONT_BET = 2;
@@ -56,7 +55,35 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
 
     }
 	
+	$scope.getPlayerName = function(currentPlayer) {
+	    
+		if (angular.isUndefined($scope.data.players[currentPlayer-1])) {
+        return 0;
+		}		
+      
+		
+		return $scope.data.players[currentPlayer-1].name;
+	}
 	
+	
+	  $scope.editPlayer = function() {
+	  
+		 var modalInstance = $modal.open({
+                templateUrl: 'player.html',
+                controller: ModalPlayerInstanceCtrl,
+                resolve: {
+                    player: function() {
+	                return $scope.data.players[$scope.currentPlayer-1];
+                    }
+                }
+            });
+            modalInstance.result.then(function(player) {
+            	$log.info('Modal dismissed with: ' + angular.toJson(player));
+            }, function() {
+                $log.info('Modal dismissed');
+            });
+	  
+        }
 	
     $scope.getWinnings = function(playerIndex) {
       if (angular.isUndefined(playerIndex)) {
@@ -282,7 +309,7 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
     $scope.bumpPlayer = function() {
       if (angular.isUndefined($scope.data.players[$scope.currentPlayer])) {
         var p = {
-          handicap: DEFAULT_PLAYER_HANDICAP,
+		  handicap: DEFAULT_PLAYER_HANDICAP,
           scores: []
         };
         for (var x = 0; x < $scope.data.course.length; x++) {
@@ -373,6 +400,7 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
         "handicap": 17
       }],
       "players": [{
+	    "name": "Paul",
         "handicap": 7,
         "scores": [{
           "grossScore": 4
@@ -412,6 +440,7 @@ golfAppControllers.controller('GolfController', ['$scope', '$log', 'Storage',
           "grossScore": 8
         }],
       }, {
+	    "name":"Andy",
         "handicap": 17,
         "scores": [{
           "grossScore": 5
