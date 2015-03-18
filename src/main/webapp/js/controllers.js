@@ -18,12 +18,12 @@ var ModalPlayerInstanceCtrl = function($scope, $modalInstance, player) {
   };
 };
 
-golfAppControllers.controller('GolfController', ['$scope', '$modal', '$log', 'Storage',
-  function($scope, $modal, $log, Storage) {
+golfAppControllers.controller('GolfController', ['$scope', '$modal', '$log', 'Storage','defaults',
+  function($scope, $modal, $log, Storage,defaults) {
 
-    var DEFAULT_BET = 2;
-    var DEFAULT_FRONT_BET = 2;
-    var DEFAULT_BACK_BET = 2;
+    var DEFAULT_BET = defaults.hole;
+    var DEFAULT_FRONT_BET = defaults.front;
+    var DEFAULT_BACK_BET = defaults.back;
     var DEFAULT_PAR = 3;
     var DEFAULT_PLAYER_HANDICAP = 0;
     var HOLES = 18;
