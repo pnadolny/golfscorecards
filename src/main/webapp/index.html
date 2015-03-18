@@ -29,14 +29,14 @@
 
 </head>
 
-<body style="padding-top:10px;">
+<body style="margin: 5px;">
 
   <div ng-controller="GolfController">
 
 
 
 
-    <div ng-cloak class="col-sm-6 col-md-4">
+    <div ng-cloak >
 
 
    
@@ -48,11 +48,24 @@
             Hole
           </td>
           <td ng-repeat="h in data.course | limitTo:9 ">
-            <div class="legend legend-type-hole">{{$index+1}}</div>
+            <div class="label label-success">{{$index+1}}</div>
           </td>
           <td>Out</td>
         </tr>
 		
+	
+  <tr>
+          <td>
+            Par
+          </td>
+          <td ng-repeat="p in data.course | limitTo:9 ">
+            <div class="label label-info" ng-bind="p.par"></div>
+          </td>
+		  <td>
+			<div class="label label-info">{{sumPar($index,0,9)}}</div>
+		  </td>
+
+        </tr>
 		
 		
         <tr>
@@ -60,58 +73,49 @@
             HDCP
           </td>
           <td ng-repeat="h in data.course |  limitTo:9">
-            <div class="legend legend-type-hdcp">{{h.handicap}}</div>
+            <div class="label label-warning" ng-bind="h.handicap"></div>
           </td>
 
           <td></td>
         </tr>
       
-	  <tr>
-          <td>
-            Par
-          </td>
-          <td ng-repeat="p in data.course | limitTo:9 ">
-            <div class="legend legend-type-hole">{{p.par}}</div>
-          </td>
-          <td></td>
-        </tr>
 		
 	  
 	  
-    	  <tr>
-            <td colspan="11">Gross</td>
+    	  <tr ng-show="data.players.length>0">
+		    <td colspan="11">Gross</td>
         </tr>
         <tr ng-repeat="p in data.players ">
           <td>
-            P{{$index+1}}&nbsp;{{p.name}}&nbsp; <span class="badge">{{p.handicap}}</span>
+            P{{$index+1}}&nbsp;{{p.name}}&nbsp; <span class="label label-warning" ng-bind="p.handicap"></span>
          
 			
           </td>
           <td ng-repeat="s in p.scores | limitTo:9 track by $index">
-            <div class="legend legend-type-player">{{s.grossScore}}</div>
+            <div class="label label-default">{{s.grossScore}}</div>
           </td>
           <td>{{sumGross($index,0,9)}}</td>
         </tr>
 
-          <tr>
-            <td colspan="11">Net</td>
+          <tr ng-show="data.players.length>0">
+		    <td colspan="11">Net</td>
 	    
           </tr>
         
 
         <tr ng-repeat="p in scoredRound.players">
           <td>
-            P{{$index+1}}&nbsp;{{p.name}}&nbsp; <span class="badge">{{p.handicap}}</span>
+            P{{$index+1}}&nbsp;{{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>
           </td>
           <td ng-repeat="s in p.scores | limitTo:9 track by $index">
-            <div class="legend legend-type-player">{{s.grossScore}}</div>
+            <div class="label label-default">{{s.grossScore}}</div>
           </td>
           <td>{{sumNet($index,0,9)}}</td>
 
         </tr>
 		
-          <tr>
-            <td colspan="11">Wins</td>
+          <tr ng-show="data.players.length>0">
+		    <td colspan="11">Wins</td>
 	    
           </tr>
        
@@ -139,7 +143,7 @@
             Hole
           </td>
           <td ng-repeat="h in data.course | limitTo:9 ">
-            <div class="legend legend-type-hole">{{$index+9}}</div>
+            <div class="label label-success">{{$index+9}}</div>
           </td>
           <td>Out</td>
         </tr>
@@ -149,37 +153,43 @@
             Par
           </td>
           <td ng-repeat="p in data.course | limitTo:9 ">
-            <div class="legend legend-type-hole">{{p.par}}</div>
+            <div class="label label-info">{{p.par}}</div>
           </td>
-          <td></td>
-        </tr>
+    	     <td>
+			 <span class="label label-info">{{sumPar($index,9,18)}}</span>
+			 </td>
+    </tr>
 		
 		
 		<tr>
           <td>
-            Hcp
+            HDCP
           </td>
           <td ng-repeat="h in data.course |  offset:9 | limitTo:9">
-            <div class="legend legend-type-hdcp">{{h.handicap}}</div>
+            <div class="label label-warning">{{h.handicap}}</div>
           </td>
 
           <td></td>
         </tr>
-          <tr>
+		
+		
+		
+          <tr ng-show="data.players.length>0">
 			<td colspan="11">Gross</td>
 	    
 		</tr>
         <tr ng-repeat="p in data.players ">
           <td>
-            P{{$index+1}}&nbsp;{{p.name}}&nbsp; <span class="badge">{{p.handicap}}</span>
+            P{{$index+1}}&nbsp;{{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>
           </td>
           <td ng-repeat="s in p.scores | offset:9 | limitTo:9 track by $index">
-            <div class="legend legend-type-player">{{s.grossScore}}</div>
+            <div class="label label-default">{{s.grossScore}}</div>
           </td>
           <td>{{sumGross($index,9,18)}}</td>
         </tr>
 
-          <tr>
+          <tr ng-show="data.players.length>0">
+	
  <td colspan="11">Net</td>
 	        
 
@@ -188,16 +198,17 @@
         <tr ng-repeat="p in scoredRound.players">
           <td>
             
-			 P{{$index+1}}&nbsp;{{p.name}}&nbsp; <span class="badge">{{p.handicap}}</span>
+			 P{{$index+1}}&nbsp;{{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>
           </td>
           <td ng-repeat="s in p.scores | offset:9 | limitTo:9 track by $index">
-            <div class="legend legend-type-player">{{s.grossScore}}</div>
+            <div class="label label-default">{{s.grossScore}}</div>
           </td>
           <td>{{sumNet($index,9,18)}}</td>
 
         </tr>
     
-		<tr>
+	     <tr ng-show="data.players.length>0">
+	
 			<td colspan="11">Wins</td>
 	      </tr>
        
@@ -350,7 +361,7 @@
 	<div ng-cloak class="col-sm-6 col-md-4">
           <div class="thumbnail shadow">
 		  
-	        <p>&nbsp<span class="legend legend-type-player" style="float:left">Player&nbsp;{{currentPlayer}}&nbsp;{{getPlayerName(currentPlayer)}}</span>
+	        <p>&nbsp;<span class="legend legend-type-player" style="float:left">Player&nbsp;{{currentPlayer}}&nbsp;{{getPlayerName(currentPlayer)}}</span>
               <span class="legend legend-type-hole" style="float:right">Hole {{currentPlayerHole+1}}</span>
             </p>
 		

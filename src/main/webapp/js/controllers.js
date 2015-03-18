@@ -2,30 +2,24 @@
 
 var golfAppControllers = angular.module('golfControllers', []);
 
-
-
-
-
 var ModalPlayerInstanceCtrl = function($scope, $modalInstance, player) {
-	$scope.player= player;
-    
-    $scope.ok = function() {
-        $modalInstance.close($scope.player);
-    };
-    $scope.cancel = function() {
-        $modalInstance.dismiss('cancel');
-    };
+    $scope.originalName = player.name;
+	$scope.player = player;
+
+  
+  
+  $scope.ok = function() {
+    $modalInstance.close($scope.player);
+  };
+  $scope.cancel = function() {
+	$scope.player.name = $scope.originalName;
+	
+    $modalInstance.dismiss('cancel');
+  };
 };
 
-
-
-
-
-
-
-
-golfAppControllers.controller('GolfController', ['$scope', '$modal','$log', 'Storage',
-  function($scope,$modal, $log, Storage) {
+golfAppControllers.controller('GolfController', ['$scope', '$modal', '$log', 'Storage',
+  function($scope, $modal, $log, Storage) {
 
     var DEFAULT_BET = 2;
     var DEFAULT_FRONT_BET = 2;
@@ -38,7 +32,7 @@ golfAppControllers.controller('GolfController', ['$scope', '$modal','$log', 'Sto
     $scope.currentPlayer = 0;
     $scope.currentPlayerHole = 0;
 
-	
+
     $scope.data = {
       frontBet: DEFAULT_FRONT_BET,
       backBet: DEFAULT_BACK_BET,
@@ -47,44 +41,47 @@ golfAppControllers.controller('GolfController', ['$scope', '$modal','$log', 'Sto
       players: []
     };
 
+	
     for (var x = 0; x < HOLES; x++) {
       $scope.data.course.push({
         par: DEFAULT_PAR,
-        handicap: x + 1
+        handicap:x+1
+      });
+	  
+	  
+
+    }
+
+    $scope.getPlayerName = function(currentPlayer) {
+
+      if (angular.isUndefined($scope.data.players[currentPlayer - 1])) {
+        return 0;
+      }
+
+
+      return $scope.data.players[currentPlayer - 1].name;
+    }
+
+
+    $scope.editPlayer = function() {
+
+      var modalInstance = $modal.open({
+        templateUrl: 'player.html',
+        controller: ModalPlayerInstanceCtrl,
+        resolve: {
+          player: function() {
+            return $scope.data.players[$scope.currentPlayer - 1];
+          }
+        }
+      });
+      modalInstance.result.then(function(player) {
+        $log.info('Modal dismissed with: ' + angular.toJson(player));
+      }, function() {
+        $log.info('Modal dismissed');
       });
 
     }
-	
-	$scope.getPlayerName = function(currentPlayer) {
-	    
-		if (angular.isUndefined($scope.data.players[currentPlayer-1])) {
-        return 0;
-		}		
-      
-		
-		return $scope.data.players[currentPlayer-1].name;
-	}
-	
-	
-	  $scope.editPlayer = function() {
-	  
-		 var modalInstance = $modal.open({
-                templateUrl: 'player.html',
-                controller: ModalPlayerInstanceCtrl,
-                resolve: {
-                    player: function() {
-	                return $scope.data.players[$scope.currentPlayer-1];
-                    }
-                }
-            });
-            modalInstance.result.then(function(player) {
-            	$log.info('Modal dismissed with: ' + angular.toJson(player));
-            }, function() {
-                $log.info('Modal dismissed');
-            });
-	  
-        }
-	
+
     $scope.getWinnings = function(playerIndex) {
       if (angular.isUndefined(playerIndex)) {
         return 0;
@@ -112,19 +109,19 @@ golfAppControllers.controller('GolfController', ['$scope', '$modal','$log', 'Sto
 
       var set = [];
       for (var p = 0; p < $scope.data.players.length; p++) {
-	     var score = $scope.sumNet(p, 0, 9);
-	     set.push(score);
-         if (score < min) {
-            winningPlayerFront = p;
-         }
-		 min = score;
+        var score = $scope.sumNet(p, 0, 9);
+        set.push(score);
+        if (score < min) {
+          winningPlayerFront = p;
+        }
+        min = score;
       }
-	  $log.log("winning player front " + JSON.stringify(winningPlayerFront));
+      $log.log("winning player front " + JSON.stringify(winningPlayerFront));
       $log.log("set..front. " + JSON.stringify(set));
-	  toUnique(set);
+      toUnique(set);
       if (set.length != 1 && winningPlayerFront === (playerIndex - 1)) {
-		$log.log("Adding "+$scope.data.frontBet + "to " + winningPlayerFront);
-		total = total + $scope.data.frontBet;
+        $log.log("Adding " + $scope.data.frontBet + "to " + winningPlayerFront);
+        total = total + $scope.data.frontBet;
       }
 
       set = [];
@@ -132,49 +129,50 @@ golfAppControllers.controller('GolfController', ['$scope', '$modal','$log', 'Sto
       var winningPlayerBack = -1;
       var min = Number.MAX_VALUE;
       for (var p = 0; p < $scope.data.players.length; p++) {
-	    var score = $scope.sumNet(p, 9, HOLES);
+        var score = $scope.sumNet(p, 9, HOLES);
         set.push(score);
         if (score < min) {
           winningPlayerBack = p;
         }
-		min = score;
+        min = score;
       }
-		toUnique(set);
+      toUnique(set);
       if (set.length != 1 && winningPlayerBack === playerIndex - 1) {
         total = total + $scope.data.backBet;
       }
       return total;
 
     }
-	
-	function toUnique(a,b,c){//array,placeholder,placeholder
-		b=a.length;
-			while(c=--b)while(c--)a[b]!==a[c]||a.splice(c,1)
-	 }
+
+    function toUnique(a, b, c) { //array,placeholder,placeholder
+      b = a.length;
+      while (c = --b)
+        while (c--) a[b] !== a[c] || a.splice(c, 1)
+    }
 
     $scope.resetHandicap = function(playerIndex) {
       $scope.data.players[playerIndex - 1].handicap = 0;
 
     }
-	$scope.resetHoleHandicap = function(holeIndex) {
-	  $scope.data.course[holeIndex].handicap = 0;
+    $scope.resetHoleHandicap = function(holeIndex) {
+      $scope.data.course[holeIndex].handicap = 0;
 
     }
-	$scope.resetHolePar = function(holeIndex) {
-	  $scope.data.course[holeIndex].par = 0;
-	}
-	
-	
-	
-	
+    $scope.resetHolePar = function(holeIndex) {
+      $scope.data.course[holeIndex].par = 0;
+    }
+
+
+
+
     $scope.loadSampleData = function() {
-	   
+
       $scope.data = $scope.sampleData;
-	  
-	  
+
+
       $scope.currentHole = 0;
       $scope.currentPlayer = 1;
-	  $scope.currentPlayerHole = 0;
+      $scope.currentPlayerHole = 0;
 
     }
     $scope.sumGross = function(playerIndex, offset, count) {
@@ -191,7 +189,18 @@ golfAppControllers.controller('GolfController', ['$scope', '$modal','$log', 'Sto
       }
       return total;
     }
-    $scope.sumWins = function(playerIndex, offset, count) {
+    
+	$scope.sumPar = function(index, offset, count) {
+      
+	    var total = 0;
+      for (var s = offset; s < $scope.data.course.length && s < count; s++) {
+        total = total + $scope.data.course[s].par;
+      }
+      return total;
+    }
+    
+	
+	$scope.sumWins = function(playerIndex, offset, count) {
       var total = 0;
       for (var s = offset; s < $scope.wins[playerIndex].length && s < count; s++) {
         var w = $scope.wins[playerIndex];
@@ -309,7 +318,7 @@ golfAppControllers.controller('GolfController', ['$scope', '$modal','$log', 'Sto
     $scope.bumpPlayer = function() {
       if (angular.isUndefined($scope.data.players[$scope.currentPlayer])) {
         var p = {
-		  handicap: DEFAULT_PLAYER_HANDICAP,
+          handicap: DEFAULT_PLAYER_HANDICAP,
           scores: []
         };
         for (var x = 0; x < $scope.data.course.length; x++) {
@@ -400,7 +409,7 @@ golfAppControllers.controller('GolfController', ['$scope', '$modal','$log', 'Sto
         "handicap": 17
       }],
       "players": [{
-	    "name": "Paul",
+        "name": "Paul",
         "handicap": 7,
         "scores": [{
           "grossScore": 4
@@ -440,7 +449,7 @@ golfAppControllers.controller('GolfController', ['$scope', '$modal','$log', 'Sto
           "grossScore": 8
         }],
       }, {
-	    "name":"Andy",
+        "name": "Andy",
         "handicap": 17,
         "scores": [{
           "grossScore": 5
