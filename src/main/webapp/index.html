@@ -111,8 +111,7 @@
             <div class="label label-default">{{s.grossScore}}</div>
           </td>
           <td>{{sumNet($index,0,9)}}</td>
-
-        </tr>
+		</tr>
 		
           <tr ng-show="data.players.length>0">
 		    <td colspan="11">Wins</td>
@@ -121,7 +120,8 @@
        
           <tr ng-repeat="w in wins track by $index">
           <td>
-            P{{$index+1}}
+		  
+            P{{$index+1}}&nbsp;
           </td>
 
           <td ng-repeat="x in w | limitTo:9 track by $index">
@@ -333,7 +333,7 @@
         </a>
 
 		<a class="btn btn-default btn-score" ng-show="data.players.length>0" ng-click="deletePlayer(currentPlayer);">
-          <span class="glyphicon glyphicon-trash" </span>
+          <span class="glyphicon glyphicon-trash"></span>
           Delete
         </a>
 
