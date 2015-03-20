@@ -10,6 +10,12 @@ th {
    text-align: center;
 }
 
+.score-card-caption {
+	text-align: center;
+	background-color: rgb(225, 232, 238);
+}
+
+
 
 .shadow {
   -webkit-box-shadow: 9px 10px 5px 0px rgba(0, 0, 0, 0.75);

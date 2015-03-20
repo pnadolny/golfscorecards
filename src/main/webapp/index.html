@@ -35,205 +35,7 @@
 
 
 
-
-    <div ng-cloak >
-
-
-   
-      <table border="1" class="table">
-		<caption>Front 9</caption>
-		
-        <tr>
-          <td>
-            Hole
-          </td>
-          <td ng-repeat="h in data.course | limitTo:9 ">
-            <div class="label label-success">{{$index+1}}</div>
-          </td>
-          <td>Out</td>
-        </tr>
-		
-	
-  <tr>
-          <td>
-            Par
-          </td>
-          <td ng-repeat="p in data.course | limitTo:9 ">
-            <div class="label label-info" ng-bind="p.par"></div>
-          </td>
-		  <td>
-			<div class="label label-info">{{sumPar($index,0,9)}}</div>
-		  </td>
-
-        </tr>
-		
-		
-        <tr>
-          <td>
-            HDCP
-          </td>
-          <td ng-repeat="h in data.course |  limitTo:9">
-            <div class="label label-warning" ng-bind="h.handicap"></div>
-          </td>
-
-          <td></td>
-        </tr>
-      
-		
-	  
-	  
-    	  <tr ng-show="data.players.length>0">
-		    <td colspan="11">Gross</td>
-        </tr>
-        <tr ng-repeat="p in data.players ">
-          <td>
-            P{{$index+1}}&nbsp;{{p.name}}&nbsp; <span class="label label-warning" ng-bind="p.handicap"></span>
-         
-			
-          </td>
-          <td ng-repeat="s in p.scores | limitTo:9 track by $index">
-            <div class="label label-default">{{s.grossScore}}</div>
-          </td>
-          <td>{{sumGross($index,0,9)}}</td>
-        </tr>
-
-          <tr ng-show="data.players.length>0">
-		    <td colspan="11">Net</td>
-	    
-          </tr>
-        
-
-        <tr ng-repeat="p in scoredRound.players">
-          <td>
-            P{{$index+1}}&nbsp;{{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>
-          </td>
-          <td ng-repeat="s in p.scores | limitTo:9 track by $index">
-            <div class="label label-default">{{s.grossScore}}</div>
-          </td>
-          <td>{{sumNet($index,0,9)}}</td>
-		</tr>
-		
-          <tr ng-show="data.players.length>0">
-		    <td colspan="11">Wins</td>
-	    
-          </tr>
-       
-          <tr ng-repeat="w in wins track by $index">
-          <td>
-		  
-            P{{$index+1}}&nbsp;
-          </td>
-
-          <td ng-repeat="x in w | limitTo:9 track by $index">
-            <span ng-show="x!=-1" class="glyphicon glyphicon-ok"></span>
-            
-          </td>
-          <td>{{sumWins($index,0,9)}}</td>
-
-        </tr>
-      </table>
-
-
-
-      <table border="1" class="table">
-
-	  <caption>Back 9</caption>
-		<tr>
-          <td>
-            Hole
-          </td>
-          <td ng-repeat="h in data.course | limitTo:9 ">
-            <div class="label label-success">{{$index+10}}</div>
-          </td>
-          <td>Out</td>
-        </tr>
-        
-		<tr>
-          <td>
-            Par
-          </td>
-          <td ng-repeat="p in data.course | limitTo:9 ">
-            <div class="label label-info">{{p.par}}</div>
-          </td>
-    	     <td>
-			 <span class="label label-info">{{sumPar($index,9,18)}}</span>
-			 </td>
-    </tr>
-		
-		
-		<tr>
-          <td>
-            HDCP
-          </td>
-          <td ng-repeat="h in data.course |  offset:9 | limitTo:9">
-            <div class="label label-warning">{{h.handicap}}</div>
-          </td>
-
-          <td></td>
-        </tr>
-		
-		
-		
-          <tr ng-show="data.players.length>0">
-			<td colspan="11">Gross</td>
-	    
-		</tr>
-        <tr ng-repeat="p in data.players ">
-          <td>
-            P{{$index+1}}&nbsp;{{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>
-          </td>
-          <td ng-repeat="s in p.scores | offset:9 | limitTo:9 track by $index">
-            <div class="label label-default">{{s.grossScore}}</div>
-          </td>
-          <td>{{sumGross($index,9,18)}}</td>
-        </tr>
-
-          <tr ng-show="data.players.length>0">
-	
- <td colspan="11">Net</td>
-	        
-
-		</tr>
-       
-        <tr ng-repeat="p in scoredRound.players">
-          <td>
-            
-			 P{{$index+1}}&nbsp;{{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>
-          </td>
-          <td ng-repeat="s in p.scores | offset:9 | limitTo:9 track by $index">
-            <div class="label label-default">{{s.grossScore}}</div>
-          </td>
-          <td>{{sumNet($index,9,18)}}</td>
-
-        </tr>
-    
-	     <tr ng-show="data.players.length>0">
-	
-			<td colspan="11">Wins</td>
-	      </tr>
-       
-        <tr ng-repeat="w in wins track by $index">
-          <td>
-            P{{$index+1}}
-          </td>
-
-          <td ng-repeat="x in w | offset:9 | limitTo:9 track by $index">
-           <span ng-show="x!=-1" class="glyphicon glyphicon-ok"></span>
-          </td>
-
-          <td>{{sumWins($index,9,18)}}</td>
-
-        </tr>
-      </table>
-
-
-	
-    </div>
-
-
-	
-	
-	      <div ng-cloak class="col-sm-6 col-md-4">
+  	      <div ng-cloak class="col-sm-6 col-md-4">
       <div class="thumbnail shadow">
 
         <p>Course</p>
@@ -409,6 +211,210 @@
 	
 
 
+
+  
+  
+
+    <div ng-cloak >
+
+
+   
+      <table border="1" class="table">
+		
+		<tr>
+		   <td class="score-card-caption" colspan="11">Front 9</td>
+	    
+		</tr>
+		
+		
+        <tr>
+          <td>
+            Hole
+          </td>
+          <td ng-repeat="h in data.course | limitTo:9 ">
+            <div class="label label-success">{{$index+1}}</div>
+          </td>
+          <td>Out</td>
+        </tr>
+		
+	
+  <tr>
+          <td>
+            Par
+          </td>
+          <td ng-repeat="p in data.course | limitTo:9 ">
+            <div class="label label-info" ng-bind="p.par"></div>
+          </td>
+		  <td>
+			<div class="label label-info">{{sumPar($index,0,9)}}</div>
+		  </td>
+
+        </tr>
+		
+		
+        <tr>
+          <td>
+            HDCP
+          </td>
+          <td ng-repeat="h in data.course |  limitTo:9">
+            <div class="label label-warning" ng-bind="h.handicap"></div>
+          </td>
+
+          <td></td>
+        </tr>
+      
+		
+	  
+	  
+    	  <tr ng-show="data.players.length>0">
+		    <td class="score-card-caption" colspan="11">Gross</td>
+        </tr>
+        <tr ng-repeat="p in data.players ">
+          <td>
+            P{{$index+1}}&nbsp;{{p.name}}&nbsp; <span class="label label-warning" ng-bind="p.handicap"></span>
+         
+			
+          </td>
+          <td ng-repeat="s in p.scores | limitTo:9 track by $index">
+            <div class="label label-default">{{s.grossScore}}</div>
+          </td>
+          <td>{{sumGross($index,0,9)}}</td>
+        </tr>
+
+          <tr ng-show="data.players.length>0">
+		    <td class="score-card-caption" colspan="11">Net</td>
+	    
+          </tr>
+        
+
+        <tr ng-repeat="p in scoredRound.players">
+          <td>
+            P{{$index+1}}&nbsp;{{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>
+          </td>
+          <td ng-repeat="s in p.scores | limitTo:9 track by $index">
+            <div class="label label-default">{{s.grossScore}}</div>
+          </td>
+          <td>{{sumNet($index,0,9)}}</td>
+		</tr>
+		
+          <tr ng-show="data.players.length>0">
+		    <td class="score-card-caption" colspan="11">Wins</td>
+	    
+          </tr>
+       
+          <tr ng-repeat="w in wins track by $index">
+          <td>
+		  
+            P{{$index+1}}&nbsp;
+          </td>
+
+          <td ng-repeat="x in w | limitTo:9 track by $index">
+            <span ng-show="x!=-1" class="glyphicon glyphicon-ok"></span>
+            
+          </td>
+          <td>{{sumWins($index,0,9)}}</td>
+
+        </tr>
+    
+	    <tr>
+		   <td class="score-card-caption" colspan="11">Back 9</td>
+	    
+		</tr>
+		<tr>
+          <td>
+            Hole
+          </td>
+          <td ng-repeat="h in data.course | limitTo:9 ">
+            <div class="label label-success">{{$index+10}}</div>
+          </td>
+          <td>Out</td>
+        </tr>
+        
+		<tr>
+          <td>
+            Par
+          </td>
+          <td ng-repeat="p in data.course | limitTo:9 ">
+            <div class="label label-info">{{p.par}}</div>
+          </td>
+    	     <td>
+			 <span class="label label-info">{{sumPar($index,9,18)}}</span>
+			 </td>
+    </tr>
+		
+		
+		<tr>
+          <td>
+            HDCP
+          </td>
+          <td ng-repeat="h in data.course |  offset:9 | limitTo:9">
+            <div class="label label-warning">{{h.handicap}}</div>
+          </td>
+
+          <td></td>
+        </tr>
+		
+		
+		
+          <tr ng-show="data.players.length>0">
+			<td class="score-card-caption" colspan="11">Gross</td>
+	    
+		</tr>
+        <tr ng-repeat="p in data.players ">
+          <td>
+            P{{$index+1}}&nbsp;{{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>
+          </td>
+          <td ng-repeat="s in p.scores | offset:9 | limitTo:9 track by $index">
+            <div class="label label-default">{{s.grossScore}}</div>
+          </td>
+          <td>{{sumGross($index,9,18)}}</td>
+        </tr>
+
+          <tr ng-show="data.players.length>0">
+	
+ <td class-"score-card-caption" colspan="11">Net</td>
+	        
+
+		</tr>
+       
+        <tr ng-repeat="p in scoredRound.players">
+          <td>
+            
+			 P{{$index+1}}&nbsp;{{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>
+          </td>
+          <td ng-repeat="s in p.scores | offset:9 | limitTo:9 track by $index">
+            <div class="label label-default">{{s.grossScore}}</div>
+          </td>
+          <td>{{sumNet($index,9,18)}}</td>
+
+        </tr>
+    
+	     <tr ng-show="data.players.length>0">
+	
+			<td class="score-card-caption" colspan="11">Wins</td>
+	      </tr>
+       
+        <tr ng-repeat="w in wins track by $index">
+          <td>
+            P{{$index+1}}
+          </td>
+
+          <td ng-repeat="x in w | offset:9 | limitTo:9 track by $index">
+           <span ng-show="x!=-1" class="glyphicon glyphicon-ok"></span>
+          </td>
+
+          <td>{{sumWins($index,9,18)}}</td>
+
+        </tr>
+      </table>
+
+
+	
+    </div>
+
+
+	
+	
 
 
 
