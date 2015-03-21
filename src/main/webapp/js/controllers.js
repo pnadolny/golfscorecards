@@ -231,7 +231,7 @@ golfAppControllers.controller('GolfController', ['$scope', '$modal', '$log', 'St
       for (var playerIndex = 0; playerIndex < scoredRound.players.length; playerIndex++) {
         scoredRound.players[playerIndex].handicap = scoredRound.players[playerIndex].handicap - lowestHandicap;
       }
-
+	
 
       for (var playerIndex = 0; playerIndex < scoredRound.players.length; playerIndex++) {
         var playerHandicap = scoredRound.players[playerIndex].handicap;
@@ -317,9 +317,12 @@ golfAppControllers.controller('GolfController', ['$scope', '$modal', '$log', 'St
 
     $scope.bumpPlayer = function() {
       if (angular.isUndefined($scope.data.players[$scope.currentPlayer])) {
+	  
+	    var nextPlayer = $scope.currentPlayer + 1;
         var p = {
           handicap: DEFAULT_PLAYER_HANDICAP,
-          scores: []
+          scores: [],
+		  name: "Player " + nextPlayer
         };
         for (var x = 0; x < $scope.data.course.length; x++) {
           p.scores.push({

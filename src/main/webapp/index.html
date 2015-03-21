@@ -39,29 +39,29 @@
       <div class="thumbnail shadow">
 
         <p>Course</p>
-        <div class="scoreThumb">
+        <div class="score-thumb score-thumb-course">
   <table width="100%">
 			  <tr>
     <th>Hole</th>
-    <th>HDCP</th> 
     <th>Par</th>
+	<th>HDCP</th> 
+    
   </tr>
 		  <tbody>
 		  <tr>
 		 <td><a class="link-digit" style="padding-left: 25px;"  ng-click="bumpHole();">{{currentHole+1}}</a>
 		  
 		  <td ng-repeat="h in data.course | offset:currentHole | limitTo:1 ">
+				<a class="link-digit" style="padding-left: 25px;"  ng-click="h.par = h.par + 1;">{{h.par}}</a>
+		  </td>
+
+		  <td ng-repeat="h in data.course | offset:currentHole | limitTo:1 ">
 				<a class="link-digit" style="padding-left: 25px;"  ng-click="h.handicap = h.handicap + 1;">{{h.handicap}}</a>		
           </td>
 		 
 	
 		  
-		  <td ng-repeat="h in data.course | offset:currentHole | limitTo:1 ">
-
-				<a class="link-digit" style="padding-left: 25px;"  ng-click="h.par = h.par + 1;">{{h.par}}</a>
-				
-		  </td>
-
+		  
 		  </tr>
 	
 	</table>
@@ -101,7 +101,7 @@
 		</p>
 		
                         
-        <div class="scoreThumb">
+        <div class="score-thumb">
 		  <table width="100%">
 		  
 		  <tr>
@@ -173,7 +173,7 @@
     <div ng-repeat="p in data.players | offset:currentPlayer-1 | limitTo:1 ">
       <div ng-repeat="s in p.scores | offset:currentPlayerHole | limitTo:1 track by $index ">
 	  
-            <div class="scoreThumb">
+            <div class="score-thumb">
 			
 		  <table width="100%">
 		  <tr>
@@ -271,7 +271,7 @@
         </tr>
         <tr ng-repeat="p in data.players ">
           <td>
-            P{{$index+1}}&nbsp;{{p.name}}&nbsp; <span class="label label-warning" ng-bind="p.handicap"></span>
+            {{p.name}}&nbsp; <span class="label label-warning" ng-bind="p.handicap"></span>
          
 			
           </td>
@@ -289,7 +289,7 @@
 
         <tr ng-repeat="p in scoredRound.players">
           <td>
-            P{{$index+1}}&nbsp;{{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>
+            {{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>
           </td>
           <td ng-repeat="s in p.scores | limitTo:9 track by $index">
             <div class="label label-default">{{s.grossScore}}</div>
@@ -362,7 +362,7 @@
 		</tr>
         <tr ng-repeat="p in data.players ">
           <td>
-            P{{$index+1}}&nbsp;{{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>
+            {{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>
           </td>
           <td ng-repeat="s in p.scores | offset:9 | limitTo:9 track by $index">
             <div class="label label-default">{{s.grossScore}}</div>
@@ -372,7 +372,7 @@
 
           <tr ng-show="data.players.length>0">
 	
- <td class-"score-card-caption" colspan="11">Net</td>
+ <td class="score-card-caption" colspan="11">Net</td>
 	        
 
 		</tr>
@@ -380,7 +380,7 @@
         <tr ng-repeat="p in scoredRound.players">
           <td>
             
-			 P{{$index+1}}&nbsp;{{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>
+			 {{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>
           </td>
           <td ng-repeat="s in p.scores | offset:9 | limitTo:9 track by $index">
             <div class="label label-default">{{s.grossScore}}</div>
@@ -421,7 +421,7 @@
 	<div ng-cloak class="col-sm-6 col-md-4">
       <div class="thumbnail shadow">
         <p>Nassau Bets</p>
-        <div class="scoreThumb">
+        <div class="score-thumb">
 		  <table width="100%">
 		  <tr>
     <th>Hole</th>
@@ -465,7 +465,7 @@
 					<span class="glyphicon glyphicon-info-sign" style="float:right"></span>
                     </p>
 
-				        <div class="scoreThumb">
+				        <div class="score-thumb">
 
                             <p class="callout-detail" style="font-weight:normal; padding: 5px;">An application to score match play golf. This application is running on Google's app engine. 
 							The technology stack includes Angular JS and Bootstrap. 
