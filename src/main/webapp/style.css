@@ -1,19 +1,30 @@
 caption {
   background-color: rgb(225, 232, 238);
-  border-top: 1px solid;
+  border-top: 2px solid;
   border-left: 1px solid;
   border-right: 1px solid;
   
 }
 
+table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+  padding: 4px;
+
+}
+
 th {
    text-align: center;
+   	background-color: rgb(225, 232, 238);
 }
 
 
 .score-card-caption {
 	text-align: center;
-	background-color: rgb(225, 232, 238);
+    background-color: rgb(135, 196, 249);
+ 	
+  border-top: 1px solid;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  
 }
 
 
@@ -27,7 +38,8 @@ th {
   height: 150px;
   border: 2px solid;
   border-radius: 5px;
-  background-color: rgb(225, 232, 238);
+  background-color: rgb(135, 196, 249);
+   
 }
 .score-thumb-course {
 	/*background-color:#5cb85c;*/

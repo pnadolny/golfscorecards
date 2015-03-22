@@ -52,14 +52,15 @@
 		 <td><a class="link-digit" style="padding-left: 25px;"  ng-click="bumpHole();">{{currentHole+1}}</a>
 		  
 		  <td ng-repeat="h in data.course | offset:currentHole | limitTo:1 ">
-				<a class="link-digit" style="padding-left: 25px;"  ng-click="h.par = h.par + 1;">{{h.par}}</a>
-		  </td>
-
-		  <td ng-repeat="h in data.course | offset:currentHole | limitTo:1 ">
 				<a class="link-digit" style="padding-left: 25px;"  ng-click="h.handicap = h.handicap + 1;">{{h.handicap}}</a>	
 		
           </td>
 		 
+		  <td ng-repeat="h in data.course | offset:currentHole | limitTo:1 ">
+				<a class="link-digit" style="padding-left: 25px;"  ng-click="h.par = h.par + 1;">{{h.par}}</a>
+		  </td>
+
+		  
 	
 		  
 		  
@@ -219,11 +220,11 @@
   
   
 
-    <div ng-cloak >
+    <div ng-cloak>
 
 
    
-      <table border="1" class="table">
+      <table border="1"  class="table">
 		
 		<tr>
 		   <td class="score-card-caption" colspan="11">Front 9</td>
@@ -270,42 +271,31 @@
 		
 	  
 	  
-    	  <tr ng-show="data.players.length>0">
-		    <td class="score-card-caption" colspan="11">Gross</td>
-        </tr>
-        <tr ng-repeat="p in data.players ">
+    	<tr ng-repeat="p in data.players ">
           <td>
-            {{p.name}}&nbsp; <span class="label label-warning" ng-bind="p.handicap"></span>
+            {{p.name}}&nbsp; <span class="label label-warning" ng-bind="p.handicap"></span>&nbsp;(Gross)
          
 			
           </td>
           <td ng-repeat="s in p.scores | limitTo:9 track by $index">
-            <div class="label label-default">{{s.grossScore}}</div>
+            <div>{{s.grossScore}}</div>
           </td>
           <td>{{sumGross($index,0,9)}}</td>
         </tr>
 
-          <tr ng-show="data.players.length>0">
-		    <td class="score-card-caption" colspan="11">Net</td>
-	    
-          </tr>
-        
+          
 
         <tr ng-repeat="p in scoredRound.players">
           <td>
-            {{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>
+            {{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>&nbsp;(Net)
           </td>
           <td ng-repeat="s in p.scores | limitTo:9 track by $index">
-            <div class="label label-default">{{s.grossScore}}</div>
+            <div>{{s.grossScore}}</div>
           </td>
           <td>{{sumNet($index,0,9)}}</td>
 		</tr>
 		
-          <tr ng-show="data.players.length>0">
-		    <td class="score-card-caption" colspan="11">Wins</td>
-	    
-          </tr>
-       
+        
           <tr ng-repeat="w in wins track by $index">
           <td>
 		    {{getPlayerName($index+1)}}
@@ -358,46 +348,29 @@
         </tr>
 		
 		
-		
-          <tr ng-show="data.players.length>0">
-			<td class="score-card-caption" colspan="11">Gross</td>
-	    
-		</tr>
-        <tr ng-repeat="p in data.players ">
+		<tr ng-repeat="p in data.players ">
           <td>
-            {{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>
+            {{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>&nbsp;(Gross)
           </td>
           <td ng-repeat="s in p.scores | offset:9 | limitTo:9 track by $index">
-            <div class="label label-default">{{s.grossScore}}</div>
+            <div>{{s.grossScore}}</div>
           </td>
           <td>{{sumGross($index,9,18)}}</td>
         </tr>
 
-          <tr ng-show="data.players.length>0">
-	
- <td class="score-card-caption" colspan="11">Net</td>
-	        
-
-		</tr>
-       
         <tr ng-repeat="p in scoredRound.players">
           <td>
             
-			 {{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>
+			 {{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>&nbsp;(Net)
           </td>
           <td ng-repeat="s in p.scores | offset:9 | limitTo:9 track by $index">
-            <div class="label label-default">{{s.grossScore}}</div>
+            <div>{{s.grossScore}}</div>
           </td>
           <td>{{sumNet($index,9,18)}}</td>
 
         </tr>
     
-	     <tr ng-show="data.players.length>0">
-	
-			<td class="score-card-caption" colspan="11">Wins</td>
-	      </tr>
-       
-        <tr ng-repeat="w in wins track by $index">
+	    <tr ng-repeat="w in wins track by $index">
           <td>
 		    {{getPlayerName($index+1)}}
           </td>

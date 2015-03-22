@@ -31,6 +31,7 @@ golfAppControllers.controller('GolfController', ['$scope', '$modal', '$log', 'St
     $scope.currentHole = 0;
     $scope.currentPlayer = 0;
     $scope.currentPlayerHole = 0;
+    $scope.wins = [];
 
 
     $scope.data = {
@@ -94,19 +95,11 @@ golfAppControllers.controller('GolfController', ['$scope', '$modal', '$log', 'St
         return 0;
 
       }
-      $log.log(JSON.stringify(playerIndex));
       var frontWins = $scope.sumWins(playerIndex - 1, 0, 9);
       var backWins = $scope.sumWins(playerIndex - 1, 9, 18);
-
-      $log.log("Front wins " + JSON.stringify(frontWins))
-      $log.log("Back wins " + JSON.stringify(backWins))
-
       var total = (frontWins * $scope.data.bet) + (backWins * $scope.data.bet);
-
-      // Who won the front?
       var winningPlayerFront = -1;
       var min = Number.MAX_VALUE;
-
       var set = [];
       for (var p = 0; p < $scope.data.players.length; p++) {
         var score = $scope.sumNet(p, 0, 9);
@@ -116,16 +109,12 @@ golfAppControllers.controller('GolfController', ['$scope', '$modal', '$log', 'St
         }
         min = score;
       }
-      $log.log("winning player front " + JSON.stringify(winningPlayerFront));
-      $log.log("set..front. " + JSON.stringify(set));
       toUnique(set);
       if (set.length != 1 && winningPlayerFront === (playerIndex - 1)) {
-        $log.log("Adding " + $scope.data.frontBet + "to " + winningPlayerFront);
         total = total + $scope.data.frontBet;
       }
 
       set = [];
-      // Who won the back?
       var winningPlayerBack = -1;
       var min = Number.MAX_VALUE;
       for (var p = 0; p < $scope.data.players.length; p++) {
@@ -166,10 +155,7 @@ golfAppControllers.controller('GolfController', ['$scope', '$modal', '$log', 'St
 
 
     $scope.loadSampleData = function() {
-
       $scope.data = $scope.sampleData;
-
-
       $scope.currentHole = 0;
       $scope.currentPlayer = 1;
       $scope.currentPlayerHole = 0;
@@ -264,8 +250,7 @@ golfAppControllers.controller('GolfController', ['$scope', '$modal', '$log', 'St
 
     );
 
-    $scope.wins = [];
-
+  
     $scope.updateWins = function() {
       $scope.wins = [];
       for (var p = 0; p < $scope.scoredRound.players.length; p++) {
