@@ -18,8 +18,8 @@ var ModalPlayerInstanceCtrl = function($scope, $modalInstance, player) {
   };
 };
 
-golfAppControllers.controller('GolfController', ['$scope', '$modal', '$log', 'Storage','defaults',
-  function($scope, $modal, $log, Storage,defaults) {
+golfAppControllers.controller('GolfController', ['$scope', '$modal', '$log', 'Storage','defaults','courseService',
+  function($scope, $modal, $log, Storage,defaults, courseService) {
 
     var DEFAULT_BET = defaults.hole;
     var DEFAULT_FRONT_BET = defaults.front;
@@ -155,11 +155,19 @@ golfAppControllers.controller('GolfController', ['$scope', '$modal', '$log', 'St
 
 
     $scope.loadSampleData = function() {
-      $scope.data = $scope.sampleData;
-      $scope.currentHole = 0;
-      $scope.currentPlayer = 1;
-      $scope.currentPlayerHole = 0;
+	
+		courseService
+          .loadCourse()
+          .then( function( sampleCourse ) {
+            
+				 $scope.data = sampleCourse;
+				  $scope.currentHole = 0;
+				  $scope.currentPlayer = 1;
+				  $scope.currentPlayerHole = 0;
+          });
 
+	
+     
     }
     $scope.sumGross = function(playerIndex, offset, count) {
       var total = 0;
@@ -317,167 +325,6 @@ golfAppControllers.controller('GolfController', ['$scope', '$modal', '$log', 'St
         $scope.data.players.push(p);
       }
       $scope.currentPlayer = $scope.currentPlayer + 1;
-    }
-
-
-    $scope.sampleData = {
-      "frontBet": 2,
-      "backBet": 2,
-      "bet": 2,
-      "course": [{
-        "par": 4,
-        "handicap": 4,
-      }, {
-        "par": 4,
-
-        "handicap": 8,
-      }, {
-        "par": 4,
-
-        "handicap": 14,
-      }, {
-        "par": 4,
-
-        "handicap": 16,
-      }, {
-        "par": 4,
-
-        "handicap": 2,
-      }, {
-        "par": 4,
-
-        "handicap": 6,
-      }, {
-        "par": 4,
-
-        "handicap": 18,
-      }, {
-        "par": 4,
-
-        "handicap": 12,
-      }, {
-        "par": 4,
-
-        "handicap": 10,
-      }, {
-        "par": 4,
-
-        "handicap": 5
-      }, {
-        "par": 4,
-
-        "handicap": 3
-      }, {
-        "par": 4,
-
-        "handicap": 7
-      }, {
-        "par": 4,
-
-        "handicap": 11
-      }, {
-        "par": 4,
-
-        "handicap": 9
-      }, {
-        "par": 4,
-
-        "handicap": 1
-      }, {
-        "par": 4,
-
-        "handicap": 15
-      }, {
-        "par": 4,
-
-        "handicap": 13
-      }, {
-        "par": 4,
-
-        "handicap": 17
-      }],
-      "players": [{
-        "name": "Paul",
-        "handicap": 7,
-        "scores": [{
-          "grossScore": 4
-        }, {
-          "grossScore": 5
-        }, {
-          "grossScore": 10
-        }, {
-          "grossScore": 6
-        }, {
-          "grossScore": 9
-        }, {
-          "grossScore": 5
-        }, {
-          "grossScore": 6
-        }, {
-          "grossScore": 4
-        }, {
-          "grossScore": 6
-        }, {
-          "grossScore": 5
-        }, {
-          "grossScore": 6
-        }, {
-          "grossScore": 5
-        }, {
-          "grossScore": 5
-        }, {
-          "grossScore": 6
-        }, {
-          "grossScore": 5
-        }, {
-          "grossScore": 3
-        }, {
-          "grossScore": 3
-        }, {
-          "grossScore": 8
-        }],
-      }, {
-        "name": "Andy",
-        "handicap": 17,
-        "scores": [{
-          "grossScore": 5
-        }, {
-          "grossScore": 4
-        }, {
-          "grossScore": 6
-        }, {
-          "grossScore": 3
-        }, {
-          "grossScore": 6
-        }, {
-          "grossScore": 3
-        }, {
-          "grossScore": 4
-        }, {
-          "grossScore": 4
-        }, {
-          "grossScore": 4
-        }, {
-          "grossScore": 6
-        }, {
-          "grossScore": 4
-        }, {
-          "grossScore": 4
-        }, {
-          "grossScore": 4
-        }, {
-          "grossScore": 5
-        }, {
-          "grossScore": 5
-        }, {
-          "grossScore": 4
-        }, {
-          "grossScore": 3
-        }, {
-          "grossScore": 6
-        }],
-
-      }]
     }
 
 

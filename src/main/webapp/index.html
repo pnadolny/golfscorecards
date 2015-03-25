@@ -51,15 +51,15 @@
 		  <tr>
 		 <td><a class="link-digit" style="padding-left: 25px;"  ng-click="bumpHole();">{{currentHole+1}}</a>
 		  
-		  <td ng-repeat="h in data.course | offset:currentHole | limitTo:1 ">
-				<a class="link-digit" style="padding-left: 25px;"  ng-click="h.handicap = h.handicap + 1;">{{h.handicap}}</a>	
-		
-          </td>
 		 
 		  <td ng-repeat="h in data.course | offset:currentHole | limitTo:1 ">
 				<a class="link-digit" style="padding-left: 25px;"  ng-click="h.par = h.par + 1;">{{h.par}}</a>
 		  </td>
 
+		  <td ng-repeat="h in data.course | offset:currentHole | limitTo:1 ">
+				<a class="link-digit" style="padding-left: 25px;"  ng-click="h.handicap = h.handicap + 1;">{{h.handicap}}</a>	
+		
+          </td>
 		  
 	
 		  
@@ -75,16 +75,17 @@
           Previous
         </a>
 
-		<a class="btn btn-default btn-score"  ng-click="resetHoleHandicap(currentHole);">
+	  <a class="btn btn-default btn-score"  ng-click="resetHolePar(currentHole);">
+            <span class="glyphicon glyphicon-repeat" a></span>
+            Reset Par
+          </a>
+	
+	<a class="btn btn-default btn-score"  ng-click="resetHoleHandicap(currentHole);">
             <span class="glyphicon glyphicon-repeat" a></span>
             Reset HDCP
           </a>
 
-		  <a class="btn btn-default btn-score"  ng-click="resetHolePar(currentHole);">
-            <span class="glyphicon glyphicon-repeat" a></span>
-            Reset Par
-          </a>
-
+	
 
       </div>
     </div>
@@ -236,7 +237,7 @@
           <td>
             Hole
           </td>
-          <td ng-repeat="h in data.course | limitTo:9 ">
+          <td ng-repeat="h in data.course | limitTo:9 " >
             <div class="label label-success">{{$index+1}}</div>
           </td>
           <td>Out</td>
@@ -271,13 +272,11 @@
 		
 	  
 	  
-    	<tr ng-repeat="p in data.players ">
-          <td>
-            {{p.name}}&nbsp; <span class="label label-warning" ng-bind="p.handicap"></span>&nbsp;(Gross)
-         
-			
+    	<tr ng-repeat="p in data.players " ng-init="outerIndex = $index+1">
+          <td ng-class="{ bold : (currentPlayer==outerIndex)}">
+            <span class="label label-warning">{{p.handicap}}</span>&nbsp;{{p.name}}&nbsp;(Gross)
           </td>
-          <td ng-repeat="s in p.scores | limitTo:9 track by $index">
+          <td ng-repeat="s in p.scores | limitTo:9 track by $index" ng-class="{ bold : currentPlayerHole==$index}">
             <div>{{s.grossScore}}</div>
           </td>
           <td>{{sumGross($index,0,9)}}</td>
@@ -285,9 +284,9 @@
 
           
 
-        <tr ng-repeat="p in scoredRound.players">
-          <td>
-            {{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>&nbsp;(Net)
+        <tr ng-repeat="p in scoredRound.players" ng-init="outerIndex = $index+1">
+          <td ng-class="{ bold : (currentPlayer==outerIndex)}">
+            <span class="label label-warning">{{p.handicap}}</span>&nbsp;{{p.name}}&nbsp;(Net)
           </td>
           <td ng-repeat="s in p.scores | limitTo:9 track by $index">
             <div>{{s.grossScore}}</div>
@@ -348,20 +347,20 @@
         </tr>
 		
 		
-		<tr ng-repeat="p in data.players ">
-          <td>
-            {{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>&nbsp;(Gross)
+		
+		<tr ng-repeat="p in data.players" ng-init="outerIndex = $index+1">
+          <td ng-class="{ bold : (currentPlayer==outerIndex)}">
+            <span class="label label-warning">{{p.handicap}}</span>&nbsp;{{p.name}}&nbsp;(Gross)
           </td>
-          <td ng-repeat="s in p.scores | offset:9 | limitTo:9 track by $index">
+          <td ng-repeat="s in p.scores | offset:9 | limitTo:9 track by $index" ng-class="{ bold : (currentPlayerHole==$index+9)}">
             <div>{{s.grossScore}}</div>
           </td>
           <td>{{sumGross($index,9,18)}}</td>
         </tr>
 
-        <tr ng-repeat="p in scoredRound.players">
-          <td>
-            
-			 {{p.name}}&nbsp; <span class="label label-warning">{{p.handicap}}</span>&nbsp;(Net)
+		<tr ng-repeat="p in scoredRound.players" ng-init="outerIndex = $index+1">
+          <td ng-class="{ bold : (currentPlayer==outerIndex)}">
+            <span class="label label-warning">{{p.handicap}}</span>&nbsp;{{p.name}}&nbsp;(Net)
           </td>
           <td ng-repeat="s in p.scores | offset:9 | limitTo:9 track by $index">
             <div>{{s.grossScore}}</div>
