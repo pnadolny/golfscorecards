@@ -1,5 +1,5 @@
 caption {
-  background-color: rgb(225, 232, 238);
+  background-color: rgb(63,81,181);
   border-top: 2px solid;
   border-left: 1px solid;
   border-right: 1px solid;
@@ -25,7 +25,7 @@ th {
 
 .score-card-caption {
 	text-align: center;
-    background-color: rgb(135, 196, 249);
+    background-color: rgb(63,81,181);
  	
   border-top: 1px solid;
   border-left: 1px solid;

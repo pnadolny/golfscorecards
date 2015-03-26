@@ -55,7 +55,7 @@
 
 </head>
 
-<body layout="column">
+<body ng-cloak layout="column">
 
   <div ng-controller="GolfController">
 	
@@ -70,7 +70,8 @@
 
   
 	<md-content>
-    <md-card>
+    
+	<md-card>
       <md-card-content>
         <h2>Course</h2>
     	 <md-grid-list md-cols-sm="1" md-cols-md="2"  md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter-gt-sm="8px" 
@@ -79,51 +80,66 @@
     	  <md-grid-tile class="green"
 			md-rowspan="1" md-colspan="2">
 			
+
+		  <md-grid-tile-header>
+			<h3>Hole</h3>
+		  </md-grid-tile-header>
+
+			
 						
-						
-			<a class="link-digit" style="padding-left: 25px;"  ng-click="bumpHole();">{{currentHole+1}}</a>
+			<a class="link-digit" ng-click="bumpHole();">{{currentHole+1}}</a>
 			
 			
-			<md-button class="md-default-theme md-accent md-fab md-fab-top-right" ng-click="decHole();">
+			<md-button class="md-default-theme md-accent md-fab md-fab-bottom-right" ng-click="decHole();">
         			-
       		</md-button>
           
 
 			
 			
-		  <md-grid-tile-footer>
-			<h3>Hole</h3>
-		
-		  </md-grid-tile-footer>
 		</md-grid-tile>
 	
  	  <md-grid-tile class="blue"
 			md-rowspan="1" md-colspan="2">
 			
-			  <div ng-repeat="h in data.course | offset:currentHole | limitTo:1 ">
-	 			<a class="link-digit"  ng-click="h.par = h.par + 1;">{{h.par}}</a>
-		      </div>
+			
+		  <md-grid-tile-header>
+			<h3>Par</h3>
+		  </md-grid-tile-header>
 
 			
-		  <md-grid-tile-footer>
-			<h3>Par</h3>
-		  </md-grid-tile-footer>
+			  <div ng-repeat="h in data.course | offset:currentHole | limitTo:1 ">
+	 			<a class="link-digit"  ng-click="h.par = h.par + 1;">{{h.par}}</a>
+				
+				<md-button class="md-default-theme md-accent md-fab md-fab-bottom-right" ng-click="h.par = h.par -1;">
+					-
+				</md-button>
+
+		      </div>
+			
+          
+			
+		
 		</md-grid-tile>
 	
 	<md-grid-tile class="yellow"
 			md-rowspan="1" md-colspan="2">
 			
+			
+		  <md-grid-tile-header>
+			<h3>Handicap</h3>
+		  </md-grid-tile-header>
+
+			
 		  <div ng-repeat="h in data.course | offset:currentHole | limitTo:1 ">
 				<a class="link-digit" ng-click="h.handicap = h.handicap + 1;">{{h.handicap}}</a>	
 		
+				<md-button class="md-default-theme md-accent md-fab md-fab-bottom-right" ng-click="h.handicap = h.handicap -1;">
+					-
+				</md-button>
           </div>
 
 			
-			
-		  <md-grid-tile-footer>
-			<h3>Handicap</h3>
-
-		  </md-grid-tile-footer>
 		</md-grid-tile>
 	
 		 
@@ -135,12 +151,7 @@
     </md-card>
   
   
-
-  
 	
-	
-	
-	<md-content>
     <md-card>
       <md-card-content>
         <h2>Player</h2>
@@ -151,51 +162,55 @@
 			md-rowspan="1" md-colspan="2">
 			
 						
+			  <md-grid-tile-header>
+			<h3>Player  {{getWinnings(currentPlayer) | currency}}
+				</h3>
+		  </md-grid-tile-header>
+		  
 						
 			<a class="link-digit" ng-show="currentPlayer>0" ng-click="bumpPlayer();">{{currentPlayer}}
 			</a>
 			
 			
-			<md-button class="md-default-theme md-accent md-fab md-fab-top-right" ng-click="currentPlayer= currentPlayer -1;">
+			<md-button class="md-default-theme md-accent md-fab md-fab-bottom-right" ng-click="currentPlayer= currentPlayer -1;">
         			-
       		</md-button>
           
-			<md-button class="md-default-theme md-primary md-fab md-fab-top-left" ng-click="bumpPlayer();">
-        			New
-      		</md-button>
-          
+			
 			
 			
 		  <md-grid-tile-footer>
-			<h3>Player</h3>
 			
-			
-				<a>{{getWinnings(currentPlayer) | currency}}</a>
+				<md-button class="md-raised md-primary" ng-click="bumpPlayer();">
+        			New
+				</md-button>
+          			
 				
 				<md-button class="md-raised md-warn" ng-show="data.players.length>0" ng-click="deletePlayer(currentPlayer);">
 					Delete
-				
-				
 				</md-button>
-		
-				
 		  </md-grid-tile-footer>
 		</md-grid-tile>
 	
  	  <md-grid-tile class="yellow"
 			md-rowspan="1" md-colspan="2">
 	
+			<md-grid-tile-header>
+			<h3>Handicap</h3>
+			</md-grid-tile-header>
 
 		    <div ng-repeat="p in data.players | offset:currentPlayer-1 | limitTo:1">
 				<a class="link-digit" ng-show="currentPlayer>0" ng-click="p.handicap = p.handicap + 1;">{{p.handicap}}</a>
+				
+				<md-button class="md-default-theme md-accent md-fab md-fab-bottom-right" ng-click="p.handicap = p.handicap -1;">
+					-
+				</md-button>
 			</div>
     
 	
 	
 			
-		  <md-grid-tile-footer>
-			<h3>Handicap</h3>
-		  </md-grid-tile-footer>
+		
 		</md-grid-tile>
 	
 	
@@ -204,33 +219,29 @@
 	
 			
 			<md-grid-tile-header>
-			
-				<h3>{{getPlayerName(currentPlayer)}}&nbsp;&nbsp;
-						Hole {{currentPlayerHole+1}}
-            	</h3>
+				<h3>{{getPlayerName(currentPlayer)}}&nbsp;-&nbsp;score&nbsp;&nbsp;(hole {{currentPlayerHole+1}})</h3>
 		  </md-grid-tile-header>
 		
 		<div ng-repeat="p in data.players | offset:currentPlayer-1 | limitTo:1 ">
 					<div ng-repeat="s in p.scores | offset:currentPlayerHole | limitTo:1 track by $index ">
 						<a class="link-digit" ng-click="s.grossScore = s.grossScore + 1;">{{s.grossScore}}</a>
-			  </div>
-			  </div>
+						
+						<md-button class="md-default-theme md-accent md-fab md-fab-bottom-right" ng-click="s.grossScore = s.grossScore -1;">
+					-
+				</md-button>
+				
+		  </div>
+		</div>
 			  
 			
 		  <md-grid-tile-footer>
-			<h3>Gross</h3>
-			
- 			 <md-button ng-disabled="!(currentPlayerHole >0)" ng-click="currentPlayerHole = currentPlayerHole - 1;">
-              <span class="glyphicon glyphicon-backward" a></span>
+ 			 <md-button class="md-raised md-primary" ng-disabled="!(currentPlayerHole >0)" ng-click="decPlayerHole();">
 				Previous Hole
              </md-button>
 
-			  <md-button ng-disabled="currentPlayerHole ==17;" ng-click="currentPlayerHole = currentPlayerHole + 1;">
-              <span class="glyphicon glyphicon-forward" a></span>
+			  <md-button class="md-raised md-primary" ng-disabled="currentPlayerHole ==17" ng-click="bumpPlayerHole();">
 				Next Hole
              </md-button>
-
-			
 		  </md-grid-tile-footer>
 		  
 		  
@@ -245,6 +256,9 @@
 		
       </md-card-content>
     </md-card>
+  
+  
+  
   
   
 <br>
@@ -265,7 +279,7 @@
 		</tr>
 		
 		
-        <tr>
+        <tr class="green">
           <td>
             Hole
           </td>
@@ -276,7 +290,7 @@
         </tr>
 		
 	
-  <tr>
+		<tr class="blue">
           <td>
             Par
           </td>
@@ -290,7 +304,7 @@
         </tr>
 		
 		
-        <tr>
+        <tr class="yellow">
           <td>
             HDCP
           </td>
@@ -304,7 +318,7 @@
 		
 	  
 	  
-    	<tr ng-repeat="p in data.players " ng-init="outerIndex = $index+1">
+    	<tr class="red" ng-repeat="p in data.players " ng-init="outerIndex = $index+1">
           <td ng-class="{ bold : (currentPlayer==outerIndex)}">
             <span class="label label-warning">{{p.handicap}}</span>&nbsp;{{p.name}}&nbsp;(Gross)
           </td>
@@ -316,7 +330,7 @@
 
           
 
-        <tr ng-repeat="p in scoredRound.players" ng-init="outerIndex = $index+1">
+        <tr class="red" ng-repeat="p in scoredRound.players" ng-init="outerIndex = $index+1">
           <td ng-class="{ bold : (currentPlayer==outerIndex)}">
             <span class="label label-warning">{{p.handicap}}</span>&nbsp;{{p.name}}&nbsp;(Net)
           </td>
@@ -333,8 +347,7 @@
           </td>
 
           <td ng-repeat="x in w | limitTo:9 track by $index">
-            <span ng-show="x!=-1" class="glyphicon glyphicon-ok"></span>
-            
+            <span ng-show="x!=-1">X</span>
           </td>
           <td>{{sumWins($index,0,9)}}</td>
 
@@ -344,7 +357,7 @@
 		   <td class="score-card-caption" colspan="11">Back 9</td>
 	    
 		</tr>
-		<tr>
+		<tr class="green">
           <td>
             Hole
           </td>
@@ -354,7 +367,7 @@
           <td>Out</td>
         </tr>
         
-		<tr>
+		<tr class="blue">
           <td>
             Par
           </td>
@@ -367,7 +380,7 @@
     </tr>
 		
 		
-		<tr>
+		<tr class="yellow">
           <td>
             HDCP
           </td>
@@ -380,7 +393,7 @@
 		
 		
 		
-		<tr ng-repeat="p in data.players" ng-init="outerIndex = $index+1">
+		<tr class="red" ng-repeat="p in data.players" ng-init="outerIndex = $index+1">
           <td ng-class="{ bold : (currentPlayer==outerIndex)}">
             <span class="label label-warning">{{p.handicap}}</span>&nbsp;{{p.name}}&nbsp;(Gross)
           </td>
@@ -390,7 +403,7 @@
           <td>{{sumGross($index,9,18)}}</td>
         </tr>
 
-		<tr ng-repeat="p in scoredRound.players" ng-init="outerIndex = $index+1">
+		<tr class="red" ng-repeat="p in scoredRound.players" ng-init="outerIndex = $index+1">
           <td ng-class="{ bold : (currentPlayer==outerIndex)}">
             <span class="label label-warning">{{p.handicap}}</span>&nbsp;{{p.name}}&nbsp;(Net)
           </td>
@@ -407,7 +420,7 @@
           </td>
 
           <td ng-repeat="x in w | offset:9 | limitTo:9 track by $index">
-           <span ng-show="x!=-1" class="glyphicon glyphicon-ok"></span>
+           <span ng-show="x!=-1">X</span>
           </td>
 
           <td>{{sumWins($index,9,18)}}</td>
@@ -420,84 +433,127 @@
     </div>
 
 
-	
-	
 
 
+	<md-card>
+		<md-card-content>
+        <h2>Nassau Bets</h2>
 
-	<div ng-cloak class="col-sm-6 col-md-4">
-      <div class="thumbnail shadow">
-        <p>Nassau Bets</p>
-        <div class="score-thumb">
-		  <table width="100%">
-		  <tr>
-    <th>Hole</th>
-    <th>Front</th> 
-    <th>Back</th>
-  </tr>
-		
+			<md-grid-list md-cols-sm="1" md-cols-md="1"  md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter-gt-sm="8px" 
+				md-cols-gt-md="6" md-gutter="12px">
+		 
+				<md-grid-tile class="green"	md-rowspan="1" md-colspan="2">
+					<md-grid-tile-header>
+						<h3>Hole</h3>
+					</md-grid-tile-header>
+					<a class="link-digit" ng-click="data.bet = data.bet + 1">{{data.bet}}</a>
+					<md-button class="md-default-theme md-accent md-fab md-fab-bottom-right" ng-click="data.bet = data.bet -1;">-</md-button>
+				</md-grid-tile>
+				
+				
+				<md-grid-tile class="green"	md-rowspan="1" md-colspan="2">
+					<md-grid-tile-header>
+						<h3>Front</h3>
+					</md-grid-tile-header>
+					<a class="link-digit" ng-click="data.frontBet = data.frontBet + 1">{{data.frontBet}}</a>
+					<md-button class="md-default-theme md-accent md-fab md-fab-bottom-right" ng-click="data.frontBet = data.frontBet -1;">-</md-button>
 
-	<tbody>
-		  <tr>
-		  
-          <td><a class="link-digit" style="padding-left: 25px;" ng-click="data.bet = data.bet + 1">{{data.bet}}</a>
-		  <td><a class="link-digit" style="padding-left: 25px;" ng-click="data.frontBet = data.frontBet + 1">{{data.frontBet}}</a>
-          <td><a class="link-digit" style="padding-left: 25px;" ng-click="data.backBet = data.backBet + 1">{{data.backBet}}</a>
-          
-		  </table>
-        </div>
-
-		   <a class="btn btn-default btn-score" ng-click="loadSampleData();">
-        <span class="glyphicon glyphicon glyphicon-floppy-disk" a></span>
-        Load Sample Round
-      </a>
-          <a class="btn btn-default btn-score" ng-click="data.frontBet=0;data.backBet=0;data.bet=0;">
-            <span class="glyphicon glyphicon-repeat" a></span>
-            Reset Bets
-          </a>
-
-
-      </div>
-    </div>
+			   
+				</md-grid-tile>
+				
+				
+				
+				<md-grid-tile class="green"	md-rowspan="1" md-colspan="2">
+					<md-grid-tile-header>
+						<h3>Back</h3>
+					</md-grid-tile-header>
+					<a class="link-digit" ng-click="data.backBet = data.backBet + 1">{{data.backBet}}</a>
+					<md-button class="md-default-theme md-accent md-fab md-fab-bottom-right" ng-click="data.backBet = data.backBet -1;">-</md-button>
 
 
-	
+			   
+				</md-grid-tile>
+
+				
+		</md-grid-list>
+      </md-card-content>
+    </md-card>
+  
+  
 
     
-		<div ng-cloak class="col-sm-6 col-md-4">
-                <div class="thumbnail shadow">
+		
+		
+	<md-card>
+		<md-card-content>
+        <h2>About</h2>
 
-                    <p>About 
-					
-					<span class="glyphicon glyphicon-info-sign" style="float:right"></span>
-                    </p>
+		<md-grid-list md-cols-sm="1" md-cols-md="1"  md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter-gt-sm="8px" 
+		 md-cols-gt-md="6" md-gutter="12px">
+		 
+    	  <md-grid-tile class="green"
+			md-rowspan="1" md-colspan="2">
+			
 
-				        <div class="score-thumb">
+		  <md-grid-tile-header>
+			<h3>About</h3>
+		  </md-grid-tile-header>
 
-                            <p class="callout-detail" style="font-weight:normal; padding: 5px;">An application to score match play golf. This application is running on Google's app engine. 
+		      <p>An application to score match play golf. This application is running on Google's app engine. 
 							The technology stack includes Angular JS and Bootstrap. 
-                                <p>
-
-                        </div>
-
-                        <a class="btn btn-default btn-score" href="https://github.com/pnadolny/golfscorecards">View on GitHub</a>
-						<a class="btn btn-default btn-score" href="https://github.com/pnadolny/golfscorecards">Report an issue</a>
-						
-						
-						
-						
-                </div>
+               <p>
 
 
-            </div>
+		  <md-grid-tile-footer>
+			  <md-button class="md-raised md-primary" href="https://github.com/pnadolny/golfscorecards">View on GitHub</md-button>
+			  <md-button class="md-raised md-primary" href="https://github.com/pnadolny/golfscorecards">Report an issue</md-button>
+		  </md-grid-tile-footer>
 
-	
-	
-	
-  </div>
-
-
+			   
+		</md-grid-tile>
+		</md-grid-list>
+		 
+		
+		
+      </md-card-content>
+    </md-card>
   
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+  
+	</md-content>
+    
   
     <script type="text/ng-template" id="player.html">
         <div class="modal-header">

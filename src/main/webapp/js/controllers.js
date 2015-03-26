@@ -282,6 +282,15 @@ golfAppControllers.controller('GolfController', ['$scope',  '$log', 'Storage','d
 	$scope.decHole = function() {
        $scope.currentHole = $scope.currentHole - 1;
 	}
+
+	$scope.decPlayerHole = function() {
+		
+       $scope.currentPlayerHole = $scope.currentPlayerHole - 1;
+	}
+	$scope.bumpPlayerHole = function() {
+       $scope.currentPlayerHole = $scope.currentPlayerHole + 1;
+	}
+
 	
     $scope.bumpHole = function() {
       if ($scope.currentHole === HOLES - 1) {
