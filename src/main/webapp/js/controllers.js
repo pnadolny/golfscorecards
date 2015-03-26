@@ -2,8 +2,8 @@
 
 var golfAppControllers = angular.module('golfControllers', []);
 
-golfAppControllers.controller('GolfController', ['$scope',  '$log', 'Storage','defaults','courseService',
-  function($scope,  $log, Storage,defaults, courseService) {
+golfAppControllers.controller('GolfController', 
+  function($scope,  $log, Storage,defaults, courseService, $mdDialog) {
 
     var DEFAULT_BET = defaults.hole;
     var DEFAULT_FRONT_BET = defaults.front;
@@ -274,9 +274,26 @@ golfAppControllers.controller('GolfController', ['$scope',  '$log', 'Storage','d
       }
     }
 
-    $scope.deletePlayer = function(index) {
-      $scope.data.players.splice(index - 1);
-      $scope.currentPlayer = $scope.currentPlayer - 1;
+    $scope.deletePlayer = function(ev,index) {
+	
+	
+		var confirm = $mdDialog.confirm()
+      .title('Would you like to delete a player?')
+      .ok('Do it!')
+      .cancel('Cancel')
+      .targetEvent(ev);
+			  
+			  
+			$mdDialog.show(confirm).then(function() {
+		      $scope.data.players.splice(index - 1);
+			   $scope.currentPlayer = $scope.currentPlayer - 1;
+			}, function() {
+
+			});
+
+	
+	
+	
     }
 
 	$scope.decHole = function() {
@@ -326,6 +343,24 @@ golfAppControllers.controller('GolfController', ['$scope',  '$log', 'Storage','d
     }
 
 
+	$scope.showConfirm = function(ev) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+      .parent(angular.element(document.body))
+      .title('Would you like to delete your debt?')
+      .content('All of the banks have agreed to forgive you your debts.')
+      .ariaLabel('Lucky day')
+      .ok('Please do it!')
+      .cancel('Sounds like a scam')
+      .targetEvent(ev);
+    $mdDialog.show(confirm).then(function() {
+      $scope.alert = 'You decided to get rid of your debt.';
+    }, function() {
+      $scope.alert = 'You decided to keep your debt.';
+    });
+  };
+	
+	
 
   }
-]);
+);

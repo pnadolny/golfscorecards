@@ -74,7 +74,7 @@
 	<md-card>
       <md-card-content>
         <h2>Course</h2>
-    	 <md-grid-list md-cols-sm="1" md-cols-md="2"  md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter-gt-sm="8px" 
+    	 <md-grid-list md-cols-sm="2" md-cols-md="2"  md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter-gt-sm="8px" 
 		 md-cols-gt-md="6" md-gutter="12px">
 		 
     	  <md-grid-tile class="green"
@@ -155,7 +155,7 @@
     <md-card>
       <md-card-content>
         <h2>Player</h2>
-    	 <md-grid-list md-cols-sm="1" md-cols-md="2"  md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter-gt-sm="8px" 
+    	 <md-grid-list md-cols-sm="2" md-cols-md="2"  md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter-gt-sm="8px" 
 		 md-cols-gt-md="6" md-gutter="12px">
 		 
     	  <md-grid-tile class="purple"
@@ -186,7 +186,7 @@
 				</md-button>
           			
 				
-				<md-button class="md-raised md-warn" ng-show="data.players.length>0" ng-click="deletePlayer(currentPlayer);">
+				<md-button class="md-raised md-warn" ng-show="data.players.length>0" ng-click="deletePlayer($event,currentPlayer);">
 					Delete
 				</md-button>
 		  </md-grid-tile-footer>
@@ -257,17 +257,100 @@
       </md-card-content>
     </md-card>
   
-  
-  
-  
-  
-<br>
 
-  
-  
-	  
+	<md-card>
+		<md-card-content>
+        <h2>Nassau Bets</h2>
 
-    <div ng-cloak>
+		
+		
+			<md-grid-list md-cols-sm="2" md-cols-md="2"  md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter-gt-sm="8px" 
+				md-cols-gt-md="6" md-gutter="12px">
+		 
+				<md-grid-tile class="green"	md-rowspan="1" md-colspan="2">
+					<md-grid-tile-header>
+						<h3>Hole</h3>
+					</md-grid-tile-header>
+					<a class="link-digit" ng-click="data.bet = data.bet + 1">{{data.bet}}</a>
+					<md-button class="md-default-theme md-accent md-fab md-fab-bottom-right" ng-click="data.bet = data.bet -1;">-</md-button>
+				</md-grid-tile>
+				
+				
+				<md-grid-tile class="green"	md-rowspan="1" md-colspan="2">
+					<md-grid-tile-header>
+						<h3>Front</h3>
+					</md-grid-tile-header>
+					<a class="link-digit" ng-click="data.frontBet = data.frontBet + 1">{{data.frontBet}}</a>
+					<md-button class="md-default-theme md-accent md-fab md-fab-bottom-right" ng-click="data.frontBet = data.frontBet -1;">-</md-button>
+
+			   
+				</md-grid-tile>
+				
+				
+				
+				<md-grid-tile class="green"	md-rowspan="1" md-colspan="2">
+					<md-grid-tile-header>
+						<h3>Back</h3>
+					</md-grid-tile-header>
+					<a class="link-digit" ng-click="data.backBet = data.backBet + 1">{{data.backBet}}</a>
+					<md-button class="md-default-theme md-accent md-fab md-fab-bottom-right" ng-click="data.backBet = data.backBet -1;">-</md-button>
+
+
+			   
+				</md-grid-tile>
+
+				
+		</md-grid-list>
+      </md-card-content>
+    </md-card>
+  
+  
+
+    
+		
+		
+	<md-card>
+		<md-card-content>
+        <h2>About</h2>
+
+		<md-grid-list md-cols-sm="2" md-cols-md="1"  md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter-gt-sm="8px" 
+		 md-cols-gt-md="6" md-gutter="12px">
+		 
+    	  <md-grid-tile class="green"
+			md-rowspan="1" md-colspan="2">
+			
+
+		  <md-grid-tile-header>
+			<h3>About</h3>
+		  </md-grid-tile-header>
+
+		      <p>An application to score match play golf. This application is running on Google's app engine. 
+							The technology stack includes Angular JS and Bootstrap. 
+               <p>
+
+
+		  <md-grid-tile-footer>
+			  <md-button class="md-raised md-primary" href="https://github.com/pnadolny/golfscorecards">View on GitHub</md-button>
+			  <md-button class="md-raised md-primary" href="https://github.com/pnadolny/golfscorecards">Report an issue</md-button>
+		  </md-grid-tile-footer>
+
+			   
+		</md-grid-tile>
+		</md-grid-list>
+		 
+		
+		
+      </md-card-content>
+    </md-card>
+  
+		
+  
+	</md-content>
+
+
+
+	
+    <div ng-cloak ng-show="false">
 
 
    
@@ -432,159 +515,6 @@
 	
     </div>
 
-
-
-
-	<md-card>
-		<md-card-content>
-        <h2>Nassau Bets</h2>
-
-			<md-grid-list md-cols-sm="1" md-cols-md="1"  md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter-gt-sm="8px" 
-				md-cols-gt-md="6" md-gutter="12px">
-		 
-				<md-grid-tile class="green"	md-rowspan="1" md-colspan="2">
-					<md-grid-tile-header>
-						<h3>Hole</h3>
-					</md-grid-tile-header>
-					<a class="link-digit" ng-click="data.bet = data.bet + 1">{{data.bet}}</a>
-					<md-button class="md-default-theme md-accent md-fab md-fab-bottom-right" ng-click="data.bet = data.bet -1;">-</md-button>
-				</md-grid-tile>
-				
-				
-				<md-grid-tile class="green"	md-rowspan="1" md-colspan="2">
-					<md-grid-tile-header>
-						<h3>Front</h3>
-					</md-grid-tile-header>
-					<a class="link-digit" ng-click="data.frontBet = data.frontBet + 1">{{data.frontBet}}</a>
-					<md-button class="md-default-theme md-accent md-fab md-fab-bottom-right" ng-click="data.frontBet = data.frontBet -1;">-</md-button>
-
-			   
-				</md-grid-tile>
-				
-				
-				
-				<md-grid-tile class="green"	md-rowspan="1" md-colspan="2">
-					<md-grid-tile-header>
-						<h3>Back</h3>
-					</md-grid-tile-header>
-					<a class="link-digit" ng-click="data.backBet = data.backBet + 1">{{data.backBet}}</a>
-					<md-button class="md-default-theme md-accent md-fab md-fab-bottom-right" ng-click="data.backBet = data.backBet -1;">-</md-button>
-
-
-			   
-				</md-grid-tile>
-
-				
-		</md-grid-list>
-      </md-card-content>
-    </md-card>
-  
-  
-
-    
-		
-		
-	<md-card>
-		<md-card-content>
-        <h2>About</h2>
-
-		<md-grid-list md-cols-sm="1" md-cols-md="1"  md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter-gt-sm="8px" 
-		 md-cols-gt-md="6" md-gutter="12px">
-		 
-    	  <md-grid-tile class="green"
-			md-rowspan="1" md-colspan="2">
-			
-
-		  <md-grid-tile-header>
-			<h3>About</h3>
-		  </md-grid-tile-header>
-
-		      <p>An application to score match play golf. This application is running on Google's app engine. 
-							The technology stack includes Angular JS and Bootstrap. 
-               <p>
-
-
-		  <md-grid-tile-footer>
-			  <md-button class="md-raised md-primary" href="https://github.com/pnadolny/golfscorecards">View on GitHub</md-button>
-			  <md-button class="md-raised md-primary" href="https://github.com/pnadolny/golfscorecards">Report an issue</md-button>
-		  </md-grid-tile-footer>
-
-			   
-		</md-grid-tile>
-		</md-grid-list>
-		 
-		
-		
-      </md-card-content>
-    </md-card>
-  
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-  
-	</md-content>
-    
-  
-    <script type="text/ng-template" id="player.html">
-        <div class="modal-header">
-            <h3>Player</h3>
-        </div>
-
-        <div class="modal-body">
-
-            <div class="form-horizontal" role="form">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label" for="payee">Name</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" ng-model="player.name" autocomplete="off" name="name" />
-						
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="modal-footer">
-                <button class="btn btn-success" ng-click="ok()">Save</button>
-                <button class="btn btn-danger" ng-click="cancel()">Cancel</button>
-            </div>
-
-
-
-    </script>
-
-
-  
-  
   
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular.min.js"></script>
      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular-resource.min.js"></script>
