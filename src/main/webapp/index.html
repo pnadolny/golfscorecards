@@ -61,9 +61,6 @@
 	
 	
 	<md-toolbar layout="row">
-        <button ng-click="toggleSidenav('left')" hide-gt-sm class="menuBtn">
-               <span class="visually-hidden">Menu</span>
-        </button>
 		<h1 class="md-toolbar-tools" layout-align-gt-sm="center">Match Play Golf</h1>
     </md-toolbar>
 
@@ -74,6 +71,10 @@
 	<md-card>
       <md-card-content>
         <h2>Course</h2>
+		<p>
+		Enter the course information.  Tap the digit to bump the number.
+		</p>
+		
     	 <md-grid-list md-cols-sm="2" md-cols-md="2"  md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter-gt-sm="8px" 
 		 md-cols-gt-md="6" md-gutter="12px">
 		 
@@ -145,7 +146,13 @@
 		 
 		</md-grid-list>
 		 
+		<md-button class="md-raised" style="margin-top: 10px;" ng-click="loadSampleCourse();">
+        			Load Sample Course
+		</md-button>
 		
+		<md-button class="md-raised" style="margin-top: 10px;" href="https://github.com/pnadolny/golfscorecards">View on GitHub</md-button>
+		<md-button class="md-raised" style="margin-top: 10px;" href="https://github.com/pnadolny/golfscorecards">Report an issue</md-button>
+
 		
       </md-card-content>
     </md-card>
@@ -165,6 +172,9 @@
 			  <md-grid-tile-header>
 			<h3>Player  {{getWinnings(currentPlayer) | currency}}
 				</h3>
+				
+				
+				
 		  </md-grid-tile-header>
 		  
 						
@@ -172,7 +182,7 @@
 			</a>
 			
 			
-			<md-button class="md-default-theme md-accent md-fab md-fab-bottom-right" ng-click="currentPlayer= currentPlayer -1;">
+			<md-button class="md-default-theme md-accent md-fab md-fab-bottom-right" ng-click="decCurrentPlayer()">
         			-
       		</md-button>
           
@@ -189,6 +199,12 @@
 				<md-button class="md-raised md-warn" ng-show="data.players.length>0" ng-click="deletePlayer($event,currentPlayer);">
 					Delete
 				</md-button>
+				
+				
+				<md-button class="md-raised" ng-show="data.players.length>0" ng-click="editPlayer($event);">
+					Edit
+				</md-button>
+				
 		  </md-grid-tile-footer>
 		</md-grid-tile>
 	
@@ -307,50 +323,13 @@
   
 
     
-		
-		
-	<md-card>
-		<md-card-content>
-        <h2>About</h2>
-
-		<md-grid-list md-cols-sm="2" md-cols-md="1"  md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter-gt-sm="8px" 
-		 md-cols-gt-md="6" md-gutter="12px">
-		 
-    	  <md-grid-tile class="green"
-			md-rowspan="1" md-colspan="2">
-			
-
-		  <md-grid-tile-header>
-			<h3>About</h3>
-		  </md-grid-tile-header>
-
-		      <p>An application to score match play golf. This application is running on Google's app engine. 
-							The technology stack includes Angular JS and Bootstrap. 
-               <p>
-
-
-		  <md-grid-tile-footer>
-			  <md-button class="md-raised md-primary" href="https://github.com/pnadolny/golfscorecards">View on GitHub</md-button>
-			  <md-button class="md-raised md-primary" href="https://github.com/pnadolny/golfscorecards">Report an issue</md-button>
-		  </md-grid-tile-footer>
-
-			   
-		</md-grid-tile>
-		</md-grid-list>
-		 
-		
-		
-      </md-card-content>
-    </md-card>
   
-		
-  
-	</md-content>
+  </md-content>
 
 
 
 	
-    <div ng-cloak ng-show="false">
+    <div ng-cloak ng-show="true">
 
 
    
@@ -515,6 +494,8 @@
 	
     </div>
 
+
+  
   
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular.min.js"></script>
      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular-resource.min.js"></script>

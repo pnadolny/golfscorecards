@@ -1,0 +1,20 @@
+<md-dialog aria-label="Player">
+  <md-content class="sticky-container">
+    <div class="dialog-content">
+		<md-input-container>
+			<label>Name</label>
+			<input ng-model="player.name">
+		</md-input-container>
+    </div>
+  </md-content>
+
+  <div class="md-actions" layout="row">
+    <span flex></span>
+    <md-button ng-click="answer('ok')">
+     Ok
+    </md-button>
+    <md-button ng-click="answer('cancel')" class="md-primary">
+      Cancel
+    </md-button>
+  </div>
+</md-dialog>

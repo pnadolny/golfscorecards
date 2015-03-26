@@ -48,25 +48,7 @@ golfAppControllers.controller('GolfController',
     }
 
 
-    $scope.editPlayer = function() {
-
-      /*var modalInstance = $modal.open({
-        templateUrl: 'player.html',
-        controller: ModalPlayerInstanceCtrl,
-        resolve: {
-          player: function() {
-            return $scope.data.players[$scope.currentPlayer - 1];
-          }
-        }
-      });
-      modalInstance.result.then(function(player) {
-        $log.info('Modal dismissed with: ' + angular.toJson(player));
-      }, function() {
-        $log.info('Modal dismissed');
-      });
-
-	  */
-    }
+    
 
     $scope.getWinnings = function(playerIndex) {
       if (angular.isUndefined(playerIndex)) {
@@ -139,7 +121,7 @@ golfAppControllers.controller('GolfController',
 
 
 
-    $scope.loadSampleData = function() {
+    $scope.loadSampleCourse = function() {
 	
 		courseService
           .loadCourse()
@@ -300,6 +282,11 @@ golfAppControllers.controller('GolfController',
        $scope.currentHole = $scope.currentHole - 1;
 	}
 
+	$scope.decCurrentPlayer = function() {
+		
+       $scope.currentPlayer = $scope.currentPlayer- 1;
+	}
+
 	$scope.decPlayerHole = function() {
 		
        $scope.currentPlayerHole = $scope.currentPlayerHole - 1;
@@ -361,6 +348,46 @@ golfAppControllers.controller('GolfController',
   };
 	
 	
+	$scope.editPlayer = function(ev) {
+		
+		
+		$mdDialog.show({
+			controller: PlayerController,
+			templateUrl: 'player.html',
+			targetEvent: ev,
+			locals: { currentPlayer:  $scope.currentPlayer, player: $scope.data.players[$scope.currentPlayer-1]}
+		})
+		.then(function(answer) {
+			
+			
+		}, function() {
+      
+		});
+    }
+	
+	
 
   }
 );
+
+
+
+function PlayerController($scope, $mdDialog, $log, currentPlayer, player) {
+
+  $log.info("Current Player "+currentPlayer);
+  
+  
+  $scope.currentPlayer = currentPlayer;
+  $scope.player = player; 
+  
+  $scope.hide = function() {
+    $mdDialog.hide();
+  };
+  $scope.cancel = function() {
+    $mdDialog.cancel();
+  };
+  $scope.answer = function(answer) {
+    $mdDialog.hide(answer);
+  };
+}
+
