@@ -2,24 +2,8 @@
 
 var golfAppControllers = angular.module('golfControllers', []);
 
-var ModalPlayerInstanceCtrl = function($scope, $modalInstance, player) {
-    $scope.originalName = player.name;
-	$scope.player = player;
-
-  
-  
-  $scope.ok = function() {
-    $modalInstance.close($scope.player);
-  };
-  $scope.cancel = function() {
-	$scope.player.name = $scope.originalName;
-	
-    $modalInstance.dismiss('cancel');
-  };
-};
-
-golfAppControllers.controller('GolfController', ['$scope', '$modal', '$log', 'Storage','defaults','courseService',
-  function($scope, $modal, $log, Storage,defaults, courseService) {
+golfAppControllers.controller('GolfController', ['$scope',  '$log', 'Storage','defaults','courseService',
+  function($scope,  $log, Storage,defaults, courseService) {
 
     var DEFAULT_BET = defaults.hole;
     var DEFAULT_FRONT_BET = defaults.front;
@@ -66,7 +50,7 @@ golfAppControllers.controller('GolfController', ['$scope', '$modal', '$log', 'St
 
     $scope.editPlayer = function() {
 
-      var modalInstance = $modal.open({
+      /*var modalInstance = $modal.open({
         templateUrl: 'player.html',
         controller: ModalPlayerInstanceCtrl,
         resolve: {
@@ -81,6 +65,7 @@ golfAppControllers.controller('GolfController', ['$scope', '$modal', '$log', 'St
         $log.info('Modal dismissed');
       });
 
+	  */
     }
 
     $scope.getWinnings = function(playerIndex) {
@@ -294,6 +279,10 @@ golfAppControllers.controller('GolfController', ['$scope', '$modal', '$log', 'St
       $scope.currentPlayer = $scope.currentPlayer - 1;
     }
 
+	$scope.decHole = function() {
+       $scope.currentHole = $scope.currentHole - 1;
+	}
+	
     $scope.bumpHole = function() {
       if ($scope.currentHole === HOLES - 1) {
         $scope.currentHole = 0;

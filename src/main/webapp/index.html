@@ -1,6 +1,12 @@
 <!doctype html>
 <html lang="en" xmlns:ng="https://angularjs.org" ng-app="golfApp">
 
+
+
+ <head>
+    
+  </head>
+
 <head>
   <title>Match Play Golf</title>
 
@@ -8,9 +14,11 @@
   <META HTTP-EQUIV="Expires" CONTENT="-1">
 
   <meta charset="utf-8">
-  <meta name="viewport" content="width = device-width,user-scalable = yes">
-
-  <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  
+  <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
+  
   <link rel="stylesheet" href="style.css" />
 
   <style>
@@ -23,203 +31,227 @@
         .x-ng-cloak {
             display: none !important;
         }
+		
+		
+		.md-grid-list {
+  margin: 8px; }
+ .gray {
+  background: #f5f5f5; }
+.green {
+  background: #b9f6ca; }
+  .yellow {
+  background: #ffff8d; }
+.blue {
+  background: #84ffff; }
+  .purple {
+  background: #b388ff; }
+ .red {
+  background: #ff8a80; }
+ md-grid-tile {
+  transition: all 400ms ease-out 50ms; }
 
    
 </style>
 
 </head>
 
-<body style="margin: 5px;">
+<body layout="column">
 
   <div ng-controller="GolfController">
-
-
-
-  	      <div ng-cloak class="col-sm-6 col-md-4">
-      <div class="thumbnail shadow">
-
-        <p>Course</p>
-        <div class="score-thumb score-thumb-course">
-  <table width="100%">
-			  <tr>
-    <th>Hole</th>
-    <th>Par</th>
-	<th>HDCP</th> 
-    
-  </tr>
-		  <tbody>
-		  <tr>
-		 <td><a class="link-digit" style="padding-left: 25px;"  ng-click="bumpHole();">{{currentHole+1}}</a>
-		  
-		 
-		  <td ng-repeat="h in data.course | offset:currentHole | limitTo:1 ">
-				<a class="link-digit" style="padding-left: 25px;"  ng-click="h.par = h.par + 1;">{{h.par}}</a>
-		  </td>
-
-		  <td ng-repeat="h in data.course | offset:currentHole | limitTo:1 ">
-				<a class="link-digit" style="padding-left: 25px;"  ng-click="h.handicap = h.handicap + 1;">{{h.handicap}}</a>	
-		
-          </td>
-		  
-	
-		  
-		  
-		  </tr>
- 	  
-	
-	</table>
-        </div>
-        
-		<a class="btn btn-default btn-score" ng-show="currentHole>0" ng-click="currentHole = currentHole -1;">
-          <span class="glyphicon glyphicon-backward" a></span>
-          Previous
-        </a>
-
-	  <a class="btn btn-default btn-score"  ng-click="resetHolePar(currentHole);">
-            <span class="glyphicon glyphicon-repeat" a></span>
-            Reset Par
-          </a>
-	
-	<a class="btn btn-default btn-score"  ng-click="resetHoleHandicap(currentHole);">
-            <span class="glyphicon glyphicon-repeat" a></span>
-            Reset HDCP
-          </a>
-
-	
-
-      </div>
-    </div>
-
-
 	
 	
-	
+	<md-toolbar layout="row">
+        <button ng-click="toggleSidenav('left')" hide-gt-sm class="menuBtn">
+               <span class="visually-hidden">Menu</span>
+        </button>
+		<h1 class="md-toolbar-tools" layout-align-gt-sm="center">Match Play Golf</h1>
+    </md-toolbar>
 
-	
-	
-    <div ng-cloak class="col-sm-6 col-md-4">
-      <div class="thumbnail shadow">
-        <p>Player 
-	
-			<a style="float: right">{{getWinnings(currentPlayer) | currency}}</a>
-		</p>
-		
-                        
-        <div class="score-thumb">
-		  <table width="100%">
-		  
-		  <tr>
-    <th>Player</th>
-    <th>HDCP</th> 
+
   
-  </tr>
-		  <tbody>
-		  <tr>
-          <td><a class="link-digit" ng-show="currentPlayer>0" ng-click="bumpPlayer();">{{currentPlayer}}</a>
-		  
-		  
-			<td ng-repeat="p in data.players | offset:currentPlayer-1 | limitTo:1">
-				<a class="link-digit" ng-show="currentPlayer>0" ng-click="p.handicap = p.handicap + 1;">{{p.handicap}}</a>
-			</td>
-          </table>
-
-
+	<md-content>
+    <md-card>
+      <md-card-content>
+        <h2>Course</h2>
+    	 <md-grid-list md-cols-sm="1" md-cols-md="2"  md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter-gt-sm="8px" 
+		 md-cols-gt-md="6" md-gutter="12px">
+		 
+    	  <md-grid-tile class="green"
+			md-rowspan="1" md-colspan="2">
+			
+						
+						
+			<a class="link-digit" style="padding-left: 25px;"  ng-click="bumpHole();">{{currentHole+1}}</a>
+			
+			
+			<md-button class="md-default-theme md-accent md-fab md-fab-top-right" ng-click="decHole();">
+        			-
+      		</md-button>
           
 
-        </div>
-        
-		<a class="btn btn-default btn-subtract" ng-show="currentPlayer>1" ng-click="currentPlayer= currentPlayer -1;">
-            <span class="glyphicon glyphicon-backward"></span>
-            Previous
-          </a>
+			
+			
+		  <md-grid-tile-footer>
+			<h3>Hole</h3>
 		
-		<a class="btn btn-default btn-score" ng-click="bumpPlayer();">
-          <span class="glyphicon glyphicon-plus"></span>
-          New
-        </a>
+		  </md-grid-tile-footer>
+		</md-grid-tile>
+	
+ 	  <md-grid-tile class="blue"
+			md-rowspan="1" md-colspan="2">
+			
+			  <div ng-repeat="h in data.course | offset:currentHole | limitTo:1 ">
+	 			<a class="link-digit"  ng-click="h.par = h.par + 1;">{{h.par}}</a>
+		      </div>
 
-        
-        <a class="btn btn-default btn-score" ng-show="data.players.length>0" ng-click="editPlayer();">
-          <span class="glyphicon glyphicon-pencil"></span>
-          Edit
-        </a>
+			
+		  <md-grid-tile-footer>
+			<h3>Par</h3>
+		  </md-grid-tile-footer>
+		</md-grid-tile>
+	
+	<md-grid-tile class="yellow"
+			md-rowspan="1" md-colspan="2">
+			
+		  <div ng-repeat="h in data.course | offset:currentHole | limitTo:1 ">
+				<a class="link-digit" ng-click="h.handicap = h.handicap + 1;">{{h.handicap}}</a>	
+		
+          </div>
 
-		<a class="btn btn-default btn-score" ng-show="data.players.length>0" ng-click="deletePlayer(currentPlayer);">
-          <span class="glyphicon glyphicon-trash"></span>
-          Delete
-        </a>
+			
+			
+		  <md-grid-tile-footer>
+			<h3>Handicap</h3>
 
+		  </md-grid-tile-footer>
+		</md-grid-tile>
+	
+		 
+		</md-grid-list>
+		 
+		
+		
+      </md-card-content>
+    </md-card>
+  
+  
 
-		  
-		<a class="btn btn-default btn-score" ng-show="currentPlayer>0" ng-click="resetHandicap(currentPlayer);">
-            <span class="glyphicon glyphicon-repeat"></span>
-            Reset HDCP
-          </a>
-
-	       
-      </div>
-    </div>
-
-
-
-
-	<div ng-show="data.players.length>0">
+  
 	
 	
-	<div ng-cloak class="col-sm-6 col-md-4">
-          <div class="thumbnail shadow">
-		  
-	        <p>&nbsp;<span class="legend legend-type-player" style="float:left">{{getPlayerName(currentPlayer)}}</span>
-              <span class="legend legend-type-hole" style="float:right">Hole {{currentPlayerHole+1}}</span>
-            </p>
-		
-		
+	
+	<md-content>
+    <md-card>
+      <md-card-content>
+        <h2>Player</h2>
+    	 <md-grid-list md-cols-sm="1" md-cols-md="2"  md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter-gt-sm="8px" 
+		 md-cols-gt-md="6" md-gutter="12px">
+		 
+    	  <md-grid-tile class="purple"
+			md-rowspan="1" md-colspan="2">
 			
-		
-    <div ng-repeat="p in data.players | offset:currentPlayer-1 | limitTo:1 ">
-      <div ng-repeat="s in p.scores | offset:currentPlayerHole | limitTo:1 track by $index ">
-	  
-            <div class="score-thumb">
+						
+						
+			<a class="link-digit" ng-show="currentPlayer>0" ng-click="bumpPlayer();">{{currentPlayer}}
+			</a>
 			
-		  <table width="100%">
-		  <tr>
-			<th>Gross</th>
-			<tbody>
-	    	<td>
-              <a class="link-digit" ng-click="s.grossScore = s.grossScore + 1;">{{s.grossScore}}</a>
+			
+			<md-button class="md-default-theme md-accent md-fab md-fab-top-right" ng-click="currentPlayer= currentPlayer -1;">
+        			-
+      		</md-button>
+          
+			<md-button class="md-default-theme md-primary md-fab md-fab-top-left" ng-click="bumpPlayer();">
+        			New
+      		</md-button>
+          
+			
+			
+		  <md-grid-tile-footer>
+			<h3>Player</h3>
+			
+			
+				<a>{{getWinnings(currentPlayer) | currency}}</a>
+				
+				<md-button class="md-raised md-warn" ng-show="data.players.length>0" ng-click="deletePlayer(currentPlayer);">
+					Delete
+				
+				
+				</md-button>
+		
+				
+		  </md-grid-tile-footer>
+		</md-grid-tile>
+	
+ 	  <md-grid-tile class="yellow"
+			md-rowspan="1" md-colspan="2">
+	
+
+		    <div ng-repeat="p in data.players | offset:currentPlayer-1 | limitTo:1">
+				<a class="link-digit" ng-show="currentPlayer>0" ng-click="p.handicap = p.handicap + 1;">{{p.handicap}}</a>
+			</div>
+    
+	
+	
+			
+		  <md-grid-tile-footer>
+			<h3>Handicap</h3>
+		  </md-grid-tile-footer>
+		</md-grid-tile>
+	
+	
+		<md-grid-tile class="red"
+			md-rowspan="1" md-colspan="2" ng-show="data.players.length>0">
+	
+			
+			<md-grid-tile-header>
+			
+				<h3>{{getPlayerName(currentPlayer)}}&nbsp;&nbsp;
+						Hole {{currentPlayerHole+1}}
+            	</h3>
+		  </md-grid-tile-header>
+		
+		<div ng-repeat="p in data.players | offset:currentPlayer-1 | limitTo:1 ">
+					<div ng-repeat="s in p.scores | offset:currentPlayerHole | limitTo:1 track by $index ">
+						<a class="link-digit" ng-click="s.grossScore = s.grossScore + 1;">{{s.grossScore}}</a>
+			  </div>
+			  </div>
 			  
-			  	</table>
-		
-            </div>
-		
-			<a class="btn btn-default btn-score" ng-show="s.grossScore !=0;" ng-click="s.grossScore= s.grossScore -1;">
-              <span class="glyphicon glyphicon-backward" a></span>
-              Subtract
-            </a>
-		</div>
-    </div>
-
-		  			 <a class="btn btn-default btn-score" ng-disabled="!(currentPlayerHole >0)" ng-click="currentPlayerHole = currentPlayerHole - 1;">
+			
+		  <md-grid-tile-footer>
+			<h3>Gross</h3>
+			
+ 			 <md-button ng-disabled="!(currentPlayerHole >0)" ng-click="currentPlayerHole = currentPlayerHole - 1;">
               <span class="glyphicon glyphicon-backward" a></span>
 				Previous Hole
-             </a>
+             </md-button>
 
-			  <a class="btn btn-default btn-score" style="float: right" ng-disabled="currentPlayerHole ==17;" ng-click="currentPlayerHole = currentPlayerHole + 1;">
+			  <md-button ng-disabled="currentPlayerHole ==17;" ng-click="currentPlayerHole = currentPlayerHole + 1;">
               <span class="glyphicon glyphicon-forward" a></span>
 				Next Hole
-             </a>
+             </md-button>
 
-	  </div>
-        </div>
+			
+		  </md-grid-tile-footer>
+		  
+		  
+		</md-grid-tile>
 	
 	
-	</div>
 	
-
-
+	
+		</md-grid-list>
+		 
+		
+		
+      </md-card-content>
+    </md-card>
+  
+  
+<br>
 
   
   
+	  
 
     <div ng-cloak>
 
@@ -498,16 +530,19 @@
   
   
   
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular.min.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular-resource.min.js"></script>
   
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular-aria.min.js"></script>
+    
   
+    <script src="//ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.js"></script>
   
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular-resource.min.js"></script>
   <script src="/js/app.js"></script>
   <script src="/js/controllers.js"></script>
   <script src="/js/services.js"></script>
   <script src="/js/filters.js"></script>
-  <script src="/js/ui-bootstrap-tpls-0.10.0.min.js"></script>
 
 
 </body>
