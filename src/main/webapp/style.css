@@ -7,19 +7,19 @@
   background: #f5f5f5; 
  }
 .green {
-  background: #b9f6ca; 
+  background: #f5f5f5; 
 }
 .yellow {
-  background: #ffff8d; 
+  background: #f5f5f5; 
 }
 .blue {
-  background: #84ffff; 
+  background: #f5f5f5; 
 }
 .purple {
-  background: #b388ff; 
+  background: #f5f5f5; 
 }
 .red {
-  background: #ff8a80; 
+  background: #f5f5f5; 
 }
 
 md-grid-tile {
@@ -44,7 +44,7 @@ th {
 
 .score-card-caption {
 	text-align: center;
-    background-color: rgb(63,81,181);
+    background-color: rgba(0,0,0,.18);
  	
   border-top: 1px solid;
   border-left: 1px solid;

@@ -22,10 +22,13 @@
     </style>
 </head>
 
+
+
 <body ng-cloak layout="column">
+
     <div ng-controller="GolfController">
         <md-toolbar layout="row">
-            <h1 class="md-toolbar-tools" layout-align-gt-sm="center">Match Play Golf</h1> </md-toolbar>
+            <h1 class="md-toolbar-tools" layout-align-gt-sm="center">Nassau - Match Play Golf</h1> </md-toolbar>
         <md-content>
             <md-card>
                 <md-card-content>
@@ -53,16 +56,17 @@
                         </md-grid-tile>
                     </md-grid-list>
                     <div layout="row" layout-align="start center">
-                        <md-button class="md-raised" ng-click="loadSampleCourse();">Load Sample Course</md-button>
-                        <md-button class="md-raised" href="https://github.com/pnadolny/golfscorecards">View on GitHub</md-button>
-                        <md-button class="md-raised" href="https://github.com/pnadolny/golfscorecards">Report an issue</md-button>
+                        <md-button class="md-raised" style="margin: 5px;" ng-click="loadSampleCourse();">Load Sample Course</md-button>
+                        <md-button class="md-raised" style="margin: 5px;" href="https://github.com/pnadolny/golfscorecards">View on GitHub</md-button>
+                        <md-button class="md-raised" style="margin: 5px;" href="https://github.com/pnadolny/golfscorecards">Report an issue</md-button>
                     </div>
                 </md-card-content>
             </md-card>
             <md-card>
                 <md-card-content>
                     <h2>Player</h2>
-                    <md-grid-list md-cols-sm="2" md-cols-md="2" md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter-gt-sm="8px" md-cols-gt-md="6" md-gutter="12px">
+					<p> Enter the player information and scores. Click on New Player to start. </p>
+						<md-grid-list md-cols-sm="2" md-cols-md="2" md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter-gt-sm="8px" md-cols-gt-md="6" md-gutter="12px">
                         <md-grid-tile class="purple" md-rowspan="1" md-colspan="2">
                             <md-grid-tile-header>
                                 <h3>Player  {{getWinnings(currentPlayer) | currency}}</h3> 
@@ -81,7 +85,7 @@
                                 <h3>{{getPlayerName(currentPlayer)}}&nbsp;-&nbsp;score&nbsp;&nbsp;(hole {{currentPlayerHole+1}})</h3> </md-grid-tile-header>
                             <div ng-repeat="p in data.players | offset:currentPlayer-1 | limitTo:1 ">
                                 <div ng-repeat="s in p.scores | offset:currentPlayerHole | limitTo:1 track by $index "> <a class="link-digit" ng-click="s.grossScore = s.grossScore + 1;">{{s.grossScore}}</a>
-                                    <md-button class="md-default-theme md-accent md-fab md-fab-bottom-left" ng-click="s.grossScore = s.grossScore -1;"> - </md-button>
+                                    <md-button class="md-default-theme md-accent md-fab md-fab-bottom-right" ng-click="s.grossScore = s.grossScore -1;"> - </md-button>
                                 </div>
                             </div>
                             <md-grid-tile-footer>
@@ -91,9 +95,9 @@
                         </md-grid-tile>
                     </md-grid-list>
                     <div layout="row" layout-align="start center">
-                        <md-button class="md-raised md-primary" style="margin-top: 10px;" ng-click="bumpPlayer();"> New </md-button>
-                        <md-button class="md-raised md-warn" style="margin-top: 10px;" ng-show="data.players.length>0" ng-click="deletePlayer($event,currentPlayer);"> Delete </md-button>
-                        <md-button class="md-raised" style="margin-top: 10px;" ng-show="data.players.length>0" ng-click="editPlayer($event);"> Edit </md-button>
+                        <md-button class="md-raised md-primary" style="margin: 5px;" ng-click="bumpPlayer();"> New Player </md-button>
+                        <md-button class="md-raised md-warn" style="margin: 5px;" ng-show="data.players.length>0" ng-click="deletePlayer($event,currentPlayer);"> Delete </md-button>
+                        <md-button class="md-raised" style="margin: 5px;" ng-show="data.players.length>0" ng-click="editPlayer($event);"> Edit </md-button>
                     </div>
                 </md-card-content>
             </md-card>
@@ -121,7 +125,11 @@
             </md-card>
         </md-content>
         <div ng-cloak ng-show="true">
-            <table border="1" class="table">
+		
+		  <md-card>
+          <md-card-content>
+			<h2>Scorecard</h2>
+            <table border="1" width="100%" class="table">
                 <tr>
                     <td class="score-card-caption" colspan="11">Front 9</td>
                 </tr>
@@ -149,14 +157,14 @@
                     <td></td>
                 </tr>
                 <tr class="red" ng-repeat="p in data.players " ng-init="outerIndex = $index+1">
-                    <td ng-class="{ bold : (currentPlayer==outerIndex)}"> <span class="label label-warning">{{p.handicap}}</span>&nbsp;{{p.name}}&nbsp;(Gross) </td>
+                    <td ng-class="{ bold : (currentPlayer==outerIndex)}">{{p.name}}&nbsp;(Gross) </td>
                     <td ng-repeat="s in p.scores | limitTo:9 track by $index" ng-class="{ bold : currentPlayerHole==$index}">
                         <div>{{s.grossScore}}</div>
                     </td>
                     <td>{{sumGross($index,0,9)}}</td>
                 </tr>
                 <tr class="red" ng-repeat="p in scoredRound.players" ng-init="outerIndex = $index+1">
-                    <td ng-class="{ bold : (currentPlayer==outerIndex)}"> <span class="label label-warning">{{p.handicap}}</span>&nbsp;{{p.name}}&nbsp;(Net) </td>
+                    <td ng-class="{ bold : (currentPlayer==outerIndex)}"> {{p.name}}&nbsp;(Net) </td>
                     <td ng-repeat="s in p.scores | limitTo:9 track by $index">
                         <div>{{s.grossScore}}</div>
                     </td>
@@ -192,14 +200,14 @@
                     <td></td>
                 </tr>
                 <tr class="red" ng-repeat="p in data.players" ng-init="outerIndex = $index+1">
-                    <td ng-class="{ bold : (currentPlayer==outerIndex)}"> <span class="label label-warning">{{p.handicap}}</span>&nbsp;{{p.name}}&nbsp;(Gross) </td>
+                    <td ng-class="{ bold : (currentPlayer==outerIndex)}">{{p.name}}&nbsp;(Gross) </td>
                     <td ng-repeat="s in p.scores | offset:9 | limitTo:9 track by $index" ng-class="{ bold : (currentPlayerHole==$index+9)}">
                         <div>{{s.grossScore}}</div>
                     </td>
                     <td>{{sumGross($index,9,18)}}</td>
                 </tr>
                 <tr class="red" ng-repeat="p in scoredRound.players" ng-init="outerIndex = $index+1">
-                    <td ng-class="{ bold : (currentPlayer==outerIndex)}"> <span class="label label-warning">{{p.handicap}}</span>&nbsp;{{p.name}}&nbsp;(Net) </td>
+                    <td ng-class="{ bold : (currentPlayer==outerIndex)}">{{p.name}}&nbsp;(Net) </td>
                     <td ng-repeat="s in p.scores | offset:9 | limitTo:9 track by $index">
                         <div>{{s.grossScore}}</div>
                     </td>
@@ -211,6 +219,10 @@
                     <td>{{sumWins($index,9,18)}}</td>
                 </tr>
             </table>
+			
+			</md-card>
+			</md-card-content>
+          
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular-resource.min.js"></script>
