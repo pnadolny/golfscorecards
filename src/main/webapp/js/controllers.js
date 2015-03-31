@@ -129,7 +129,8 @@ golfAppControllers.controller('GolfController', function($scope, $log, Storage, 
         }
         return total;
     };
-    $scope.scoreRound = function() {
+	
+    var scoreRound = function() {
         var scoredRound = angular.copy($scope.data);
         var course = scoredRound.course;
         for (var x = 0; x < course.length; x++) {
@@ -170,30 +171,35 @@ golfAppControllers.controller('GolfController', function($scope, $log, Storage, 
         $scope.scoredRound = scoredRound;
     };
     $scope.$watch('data', function(newValue, oldValue) {
-        $scope.scoreRound();
-        $scope.updateWins();
+        scoreRound();
+        updateWins();
     }, true);
-    $scope.updateWins = function() {
+    
+	var updateWins = function() {
         $scope.wins = [];
-        for (var p = 0; p < $scope.scoredRound.players.length; p++) {
+        for (var playerIndex = 0; playerIndex < $scope.scoredRound.players.length; playerIndex++) {
+		
             var win = [];
-            for (var h = 0; h < $scope.scoredRound.course.length; h++) {
+            holes: for (var holeIndex = 0; holeIndex < $scope.scoredRound.course.length; holeIndex++) {
+			
+				// If only one element in the the set, its a tie, called a push in match play.
                 var set = new Set();
                 for (var pp = 0; pp < $scope.scoredRound.players.length; pp++) {
-                    set.add($scope.scoredRound.players[pp].scores[h].grossScore);
-                }
-                // Is this a push?
+                    set.add($scope.scoredRound.players[pp].scores[holeIndex].grossScore);
+               }
                 if (set.size == 1) {
                     win.push(-1);
-                    continue;
+                    continue holes;
                 }
-                // Whats the min score on this hole
-                var m = 1000;
+				
+				
+                // Whats the min score on this hole? Winner gets a 1.
+                var lowestScore = Number.MAX_VALUE;
                 for (var pp = 0; pp < $scope.scoredRound.players.length; pp++) {
-                    m = Math.min(m, $scope.scoredRound.players[pp].scores[h].grossScore);
+                    lowestScore = Math.min(lowestScore, $scope.scoredRound.players[pp].scores[holeIndex].grossScore);
                 }
                 // Is this player the min?
-                if (m == $scope.scoredRound.players[p].scores[h].grossScore) {
+                if (lowestScore == $scope.scoredRound.players[playerIndex].scores[holeIndex].grossScore) {
                     win.push(1);
                 } else {
                     win.push(-1);
