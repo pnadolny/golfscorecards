@@ -1,4 +1,9 @@
 
+.scorecard-value {
+	text-align:center;
+	font-weight: bold;
+}
+
 .md-grid-list {
   margin: 8px; 
 }
@@ -28,11 +33,12 @@ md-grid-tile {
 
 .bold {
     font-weight: bold;
+	background-color: rgb(225, 232, 238);
 }
 
 
 table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
-  padding: 4px;
+  padding: 2px;
 
 }
 

@@ -1,3 +1,4 @@
+;(function() {
 'use strict';
 // Source from
 // https://github.com/SimplyDo/projector/blob/gh-pages/js/services.js
@@ -236,3 +237,4 @@ servicesModule.factory('Storage', function() {
 
 	
 });
+})();
