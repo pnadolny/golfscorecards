@@ -30,7 +30,11 @@ golfAppControllers.controller('GolfController', function($scope, $log, Storage, 
         }
         return $scope.data.players[currentPlayer - 1].name;
     }
-    $scope.getWinnings = function(playerIndex) {
+	
+	
+	
+	
+    $scope.getWinnings = function(playerIndex,flag) {
         if (angular.isUndefined(playerIndex)) {
             return 0;
         }
@@ -73,6 +77,18 @@ golfAppControllers.controller('GolfController', function($scope, $log, Storage, 
         if (set.length != 1 && winningPlayerBack === playerIndex - 1) {
             total = total + $scope.data.backBet;
         }
+	 	
+		
+		if (!flag) {
+			for (var i = 0; i < $scope.data.players.length; i++) {
+				if (i+1==playerIndex) {
+					continue;
+				}
+				total = total - $scope.getWinnings(i+1,true);
+			}
+		}
+		
+		
         return total;
     }
 
