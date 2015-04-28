@@ -1,0 +1,34 @@
+<div ng-cloak layout="column">
+            <md-card>
+                <md-card-content>
+                    <h2>Course</h2>
+                    <p> Enter the course information. Tap the digit to bump the number. </p>
+                    <md-grid-list md-cols-sm="2" md-cols-md="2" md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter-gt-sm="8px" md-cols-gt-md="6" md-gutter="12px">
+                        <md-grid-tile class="green" md-rowspan="1" md-colspan="2">
+                            <md-grid-tile-header>
+                                <h3>Hole</h3> </md-grid-tile-header> <a class="link-digit" ng-click="bumpHole();">{{currentHole+1}}</a>
+                            <md-button ng-show="currentHole>=1" class="md-default-theme md-accent md-fab md-fab-bottom-left" ng-click="decHole();"> - </md-button>
+                        </md-grid-tile>
+                        <md-grid-tile class="blue" md-rowspan="1" md-colspan="2">
+                            <md-grid-tile-header>
+                                <h3>Par</h3> </md-grid-tile-header>
+                            <div ng-repeat="h in data.course | offset:currentHole | limitTo:1 "> <a class="link-digit" ng-click="h.par = h.par + 1;">{{h.par}}</a>
+                                <md-button ng-show="h.par>=1" class="md-default-theme md-accent md-fab md-fab-bottom-left" ng-click="h.par = h.par -1;"> - </md-button>
+                            </div>
+                        </md-grid-tile>
+                        <md-grid-tile class="yellow" md-rowspan="1" md-colspan="2">
+                            <md-grid-tile-header>
+                                <h3>Handicap</h3> </md-grid-tile-header>
+                            <div ng-repeat="h in data.course | offset:currentHole | limitTo:1 "> <a class="link-digit" ng-click="h.handicap = h.handicap + 1;">{{h.handicap}}</a>
+                                <md-button ng-show="h.handicap>=1" class="md-default-theme md-accent md-fab md-fab-bottom-left" ng-click="h.handicap = h.handicap -1;"> - </md-button>
+                            </div>
+                        </md-grid-tile>
+                    </md-grid-list>
+                    <div layout="row" layout-align="start center">
+                        <md-button class="md-raised" style="margin: 5px;" ng-click="loadSampleCourse();">Load Sample Course</md-button>
+                        <md-button class="md-raised" style="margin: 5px;" href="https://github.com/pnadolny/golfscorecards">View on GitHub</md-button>
+                        <md-button class="md-raised" style="margin: 5px;" href="https://github.com/pnadolny/golfscorecards">Report an issue</md-button>
+                    </div>
+                </md-card-content>
+            </md-card>
+</<div>

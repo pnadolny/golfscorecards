@@ -1,0 +1,97 @@
+<div ng-cloak layout="column">
+  	  <md-card>
+          <md-card-content>
+	    		<h2>Scorecard</h2>
+            <table border="1" width="100%" class="table">
+                <tr>
+                    <td class="score-card-caption" colspan="11">Front 9</td>
+                </tr>
+                <tr class="green">
+                    <td> Hole </td>
+                    <td class="scorecard-value" ng-repeat="h in data.course | limitTo:9 ">
+                        <div class="label label-success">{{$index+1}}</div>
+                    </td>
+                    <td class="scorecard-value">Out</td>
+                </tr>
+                <tr class="blue">
+                    <td> Par </td>
+                    <td class="scorecard-value" ng-repeat="p in data.course | limitTo:9 ">
+                        <div class="label label-info" ng-bind="p.par"></div>
+                    </td>
+                    <td class="scorecard-value">
+                        {{sumPar($index,0,9)}}
+                    </td>
+                </tr>
+                <tr class="yellow">
+                    <td> HDCP </td>
+                    <td class="scorecard-value" ng-repeat="h in data.course |  limitTo:9">
+                        <div class="label label-warning" ng-bind="h.handicap"></div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr class="red" ng-repeat="p in data.players " ng-init="outerIndex = $index+1">
+                    <td ng-class="{ bold : (currentPlayer==outerIndex)}">{{p.name}}&nbsp;(Gross) </td>
+                    <td class="scorecard-value" ng-repeat="s in p.scores | limitTo:9 track by $index" ng-class="{ bold : currentPlayerHole==$index}">
+                        <div>{{s.grossScore}}</div>
+                    </td>
+                    <td class="scorecard-value">{{sumGross($index,0,9)}}</td>
+                </tr>
+                <tr class="red" ng-repeat="p in scoredRound.players" ng-init="outerIndex = $index+1">
+                    <td ng-class="{ bold : (currentPlayer==outerIndex)}"> {{p.name}}&nbsp;(Net) </td>
+                    <td class="scorecard-value" ng-repeat="s in p.scores | limitTo:9 track by $index">
+                        <div>{{s.grossScore}}</div>
+                    </td>
+                    <td class="scorecard-value">{{sumNet($index,0,9)}}</td>
+                </tr>
+                <tr ng-repeat="w in wins track by $index">
+                    <td> {{getPlayerName($index+1)}} </td>
+                    <td class="scorecard-value" ng-repeat="x in w | limitTo:9 track by $index"> <span ng-show="x!=-1">X</span> </td>
+                    <td class="scorecard-value">{{sumWins($index,0,9)}}</td>
+                </tr>
+                <tr>
+                    <td class="score-card-caption" colspan="11">Back 9</td>
+                </tr>
+                <tr class="green">
+                    <td> Hole </td>
+                    <td class="scorecard-value" ng-repeat="h in data.course | limitTo:9 ">
+                        <div class="label label-success">{{$index+10}}</div>
+                    </td>
+                    <td class="scorecard-value">Out</td>
+                </tr>
+                <tr class="blue">
+                    <td> Par </td>
+                    <td class="scorecard-value" ng-repeat="p in data.course | limitTo:9 ">
+                        <div class="label label-info">{{p.par}}</div>
+                    </td>
+                    <td class="scorecard-value">{{sumPar($index,9,18)}}</td>
+                </tr>
+                <tr class="yellow">
+                    <td> HDCP </td>
+                    <td class="scorecard-value" ng-repeat="h in data.course |  offset:9 | limitTo:9">
+                        <div class="label label-warning">{{h.handicap}}</div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr class="red" ng-repeat="p in data.players" ng-init="outerIndex = $index+1">
+                    <td ng-class="{ bold : (currentPlayer==outerIndex)}">{{p.name}}&nbsp;(Gross) </td>
+                    <td class="scorecard-value" ng-repeat="s in p.scores | offset:9 | limitTo:9 track by $index" ng-class="{ bold : (currentPlayerHole==$index+9)}">
+                        <div>{{s.grossScore}}</div>
+                    </td>
+                    <td class="scorecard-value">{{sumGross($index,9,18)}}</td>
+                </tr>
+                <tr class="red" ng-repeat="p in scoredRound.players" ng-init="outerIndex = $index+1">
+                    <td ng-class="{ bold : (currentPlayer==outerIndex)}">{{p.name}}&nbsp;(Net) </td>
+                    <td class="scorecard-value" ng-repeat="s in p.scores | offset:9 | limitTo:9 track by $index">
+                        <div>{{s.grossScore}}</div>
+                    </td>
+                    <td class="scorecard-value">{{sumNet($index,9,18)}}</td>
+                </tr>
+                <tr ng-repeat="w in wins track by $index">
+                    <td> {{getPlayerName($index+1)}} </td>
+                    <td class="scorecard-value" ng-repeat="x in w | offset:9 | limitTo:9 track by $index"> <span ng-show="x!=-1">X</span> </td>
+                    <td class="scorecard-value">{{sumWins($index,9,18)}}</td>
+                </tr>
+            </table>
+          </md-card-content>
+			</md-card>
+</div>

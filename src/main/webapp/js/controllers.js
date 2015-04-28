@@ -2,7 +2,7 @@
 
 'use strict';
 var golfAppControllers = angular.module('golfControllers', []);
-golfAppControllers.controller('GolfController', function($scope, $log, Storage, courseService, $mdDialog, gameDefaults) {
+golfAppControllers.controller('GolfController', function($scope, $log, Storage, courseService, $mdDialog, gameDefaults,$mdSidenav) {
 
     $scope.currentHole = 0;
     $scope.currentPlayer = 0;
@@ -20,12 +20,19 @@ golfAppControllers.controller('GolfController', function($scope, $log, Storage, 
             handicap: x + 1
         });
     }
-	
+
+    $scope.toggleSidenav = function(menuId) {
+            $mdSidenav("left").toggle().then(function(){
+    			       $log.debug("toggle is done");
+             });
+        };
+
+
     $scope.getPlayerName = function(currentPlayer) {
 		return $scope.data.players[currentPlayer - 1] && $scope.data.players[currentPlayer - 1].name;
 		//return $scope.data.players[currentPlayer - 1] ? $scope.data.players[currentPlayer - 1].name : 0;
 	}
-	
+
     $scope.getWinnings = function(playerIndex,flag) {
         if (angular.isUndefined(playerIndex)) {
             return 0;
@@ -69,8 +76,8 @@ golfAppControllers.controller('GolfController', function($scope, $log, Storage, 
         if (set.length != 1 && winningPlayerBack === playerIndex - 1) {
             total = total + $scope.data.backBet;
         }
-	 	
-		
+
+
 		if (!flag) {
 			for (var i = 0; i < $scope.data.players.length; i++) {
 				if (i+1==playerIndex) {
@@ -79,8 +86,8 @@ golfAppControllers.controller('GolfController', function($scope, $log, Storage, 
 				total = total - $scope.getWinnings(i+1,true);
 			}
 		}
-		
-		
+
+
         return total;
     }
 
@@ -137,7 +144,7 @@ golfAppControllers.controller('GolfController', function($scope, $log, Storage, 
         }
         return total;
     };
-	
+
     var scoreRound = function() {
         var scoredRound = angular.copy($scope.data);
         var course = scoredRound.course;
@@ -147,12 +154,12 @@ golfAppControllers.controller('GolfController', function($scope, $log, Storage, 
         course.sort(function(a, b) {
             return a.handicap - b.handicap;
         });
-        
+
         var lowestHandicap =scoredRound.players.reduce(function(lowestHandicap,player) {
 			return Math.min(lowestHandicap,player.handicap);
 		},Number.MAX_VALUE);
-				
-	
+
+
         for (var playerIndex = 0; playerIndex < scoredRound.players.length; playerIndex++) {
             scoredRound.players[playerIndex].handicap = scoredRound.players[playerIndex].handicap - lowestHandicap;
         }
@@ -183,14 +190,14 @@ golfAppControllers.controller('GolfController', function($scope, $log, Storage, 
         scoreRound();
         updateWins();
     }, true);
-    
+
 	var updateWins = function() {
         $scope.wins = [];
         for (var playerIndex = 0; playerIndex < $scope.scoredRound.players.length; playerIndex++) {
-		
+
             var win = [];
             holes: for (var holeIndex = 0; holeIndex < $scope.scoredRound.course.length; holeIndex++) {
-			
+
 				// If only one element in the the set, its a tie, called a push in match play.
                 var set = new Set();
                 for (var pp = 0; pp < $scope.scoredRound.players.length; pp++) {
@@ -200,15 +207,15 @@ golfAppControllers.controller('GolfController', function($scope, $log, Storage, 
                     win.push(-1);
                     continue holes;
                 }
-				
-				
+
+
 				 // Whats the min score on this hole? Winner gets a 1.
                 var lowestScore = $scope.scoredRound.players.reduce(function(lowestScore,currentValue) {
 					return Math.min(lowestScore, currentValue.scores[holeIndex].grossScore );
 				},Number.MAX_VALUE);
-				
-				
-           
+
+
+
                 // Is this player the min?
                 if (lowestScore == $scope.scoredRound.players[playerIndex].scores[holeIndex].grossScore) {
                     win.push(1);

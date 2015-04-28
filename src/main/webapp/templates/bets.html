@@ -1,0 +1,24 @@
+<div ng-cloak layout="column">
+      <md-card>
+                <md-card-content>
+                    <h2>Nassau Bets</h2>
+                    <md-grid-list md-cols-sm="2" md-cols-md="2" md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter-gt-sm="8px" md-cols-gt-md="6" md-gutter="12px">
+                        <md-grid-tile class="green" md-rowspan="1" md-colspan="2">
+                            <md-grid-tile-header>
+                                <h3>Hole</h3> </md-grid-tile-header> <a class="link-digit" ng-click="data.bet = data.bet + 1">{{data.bet}}</a>
+                            <md-button class="md-default-theme md-accent md-fab md-fab-bottom-left" ng-click="data.bet = data.bet -1;">-</md-button>
+                        </md-grid-tile>
+                        <md-grid-tile class="green" md-rowspan="1" md-colspan="2">
+                            <md-grid-tile-header>
+                                <h3>Front</h3> </md-grid-tile-header> <a class="link-digit" ng-click="data.frontBet = data.frontBet + 1">{{data.frontBet}}</a>
+                            <md-button class="md-default-theme md-accent md-fab md-fab-bottom-left" ng-click="data.frontBet = data.frontBet -1;">-</md-button>
+                        </md-grid-tile>
+                        <md-grid-tile class="green" md-rowspan="1" md-colspan="2">
+                            <md-grid-tile-header>
+                                <h3>Back</h3> </md-grid-tile-header> <a class="link-digit" ng-click="data.backBet = data.backBet + 1">{{data.backBet}}</a>
+                            <md-button class="md-default-theme md-accent md-fab md-fab-bottom-left" ng-click="data.backBet = data.backBet -1;">-</md-button>
+                        </md-grid-tile>
+                    </md-grid-list>
+                </md-card-content>
+        </md-card>
+</div>

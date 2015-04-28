@@ -12,14 +12,13 @@
         <handler file="/error.html"/>
         <handler file="/over_quota.html" error-code="over_quota"/>
         <handler file="/timeout.html" error-code="timeout"/>
-    </static-error-handlers>
-	
+  </static-error-handlers>
+
 	<static-files>
-	    <include path="/*.html" />
-		 
+	  <include path="/**.html" />
 		<include path="/**.js" />
 		<include path="/**.css" />
 		<include path="/**.jpg" />
-    </static-files> 
-	 	 
+	</static-files>
+
 </appengine-web-app>
