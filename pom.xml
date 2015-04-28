@@ -10,7 +10,7 @@
     <properties>
         <appengine.app.version>1</appengine.app.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	    <appengine.target.version>1.9.18</appengine.target.version>
+	    <appengine.target.version>1.9.19</appengine.target.version>
     </properties>
 
     <prerequisites>
@@ -30,10 +30,10 @@
             </releases>
         </pluginRepository>
     </pluginRepositories>
-    
+
     <dependencies>
         <!-- Compile/runtime dependencies -->
-		
+
 	 <dependency>
 		<groupId>com.google.code.gson</groupId>
 		<artifactId>gson</artifactId>
@@ -73,8 +73,8 @@
 
     <build>
         <!-- for hot reload of the web application -->
-        <outputDirectory>target/${project.artifactId}-${project.version}/WEB-INF/classes</outputDirectory>
-		
+        <outputDirectory>target/${project.artifactId}-${project.version}/WEB-INF</outputDirectory>
+
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

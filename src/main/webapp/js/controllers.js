@@ -22,11 +22,9 @@ golfAppControllers.controller('GolfController', function($scope, $log, Storage, 
     }
 	
     $scope.getPlayerName = function(currentPlayer) {
-        if (angular.isUndefined($scope.data.players[currentPlayer - 1])) {
-            return 0;
-        }
-        return $scope.data.players[currentPlayer - 1].name;
-    }
+		return $scope.data.players[currentPlayer - 1] && $scope.data.players[currentPlayer - 1].name;
+		//return $scope.data.players[currentPlayer - 1] ? $scope.data.players[currentPlayer - 1].name : 0;
+	}
 	
     $scope.getWinnings = function(playerIndex,flag) {
         if (angular.isUndefined(playerIndex)) {

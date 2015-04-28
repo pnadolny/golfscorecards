@@ -8,17 +8,17 @@
     <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
     <META HTTP-EQUIV="Expires" CONTENT="-1">
     <meta charset="utf-8">
-	
+
 	<!-- CSS -->
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
-    
+
 	<!-- mobile meta -->
 	<meta name="HandheldFriendly" content="True">
 	<meta name="MobileOptimized" content="320">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<!--<meta name="viewport" content="initial-scale=1, maximum-scale=1" />-->
-	
+
     <link rel="stylesheet" href="style.css" />
     <style>
         [ng\:cloak],
@@ -79,7 +79,7 @@
 						<md-grid-list md-cols-sm="2" md-cols-md="2" md-row-height-gt-md="1:1" md-row-height="1:1" md-gutter-gt-sm="8px" md-cols-gt-md="6" md-gutter="12px">
                         <md-grid-tile class="purple" md-rowspan="1" md-colspan="2">
                             <md-grid-tile-header>
-                                <h3>Player  {{getWinnings(currentPlayer) | currency}}</h3> 
+                                <h3>Player  {{getWinnings(currentPlayer) | currency}}</h3>
                                 </md-grid-tile-header> <a class="link-digit" ng-show="currentPlayer>0" ng-click="bumpPlayer();">{{currentPlayer}}</a>
                             <md-button class="md-default-theme md-accent md-fab md-fab-bottom-left" ng-click="decCurrentPlayer()"> - </md-button>
                         </md-grid-tile>
@@ -135,7 +135,7 @@
             </md-card>
         </md-content>
         <div ng-cloak ng-show="true">
-		
+
 		  <md-card>
           <md-card-content>
 			<h2>Scorecard</h2>
@@ -229,10 +229,10 @@
                     <td class="scorecard-value">{{sumWins($index,9,18)}}</td>
                 </tr>
             </table>
-			
+
 			</md-card>
 			</md-card-content>
-          
+
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular-resource.min.js"></script>
